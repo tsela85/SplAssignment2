@@ -7,8 +7,8 @@ using namespace std;
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeFormatter.h"
 
-#include "EventsConfiguration.h"
-#include "AppLogger.h"
+#include "../h/EventsConfiguration.h"
+#include "../h/AppLogger.h"
 
 int main(int argc, char** argv)
 {

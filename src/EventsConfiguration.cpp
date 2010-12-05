@@ -5,8 +5,8 @@
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeParser.h"
 
-#include "EventsConfiguration.h"
-#include "AppLogger.h"
+#include "../h/EventsConfiguration.h"
+#include "../h/AppLogger.h"
 
 using namespace Poco;
 using namespace Poco::Util;

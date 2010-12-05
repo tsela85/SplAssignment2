@@ -5,7 +5,7 @@
 #include "Poco/ConsoleChannel.h"
 #include "Poco/FileChannel.h"
 
-#include "AppLogger.h"
+#include "../h/AppLogger.h"
 
 using namespace Poco;
 using namespace std;
