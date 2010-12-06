@@ -44,7 +44,7 @@ all: SplAssignment2
 SplAssignment2: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o"SplAssignment2" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ /usr/lib/libPocoFoundation.so /usr/lib/libPocoUtil.so -L/usr/lib -L/usr/lib64 -o"SplAssignment2" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
