@@ -29,7 +29,7 @@
 #define LAVISH 1
 #define COST_EFFECTIVE 2
 
-#include "../includes/Poco"
+#include "Poco/Foundation.h"
 
 
 #endif /* DEFS_H_ */
