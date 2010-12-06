@@ -4,28 +4,51 @@
  *  Created on: Dec 5, 2010
  *      Author: Tom and Aviad
  */
-#include <string>
-#include <vector>
-#include "../headers/defs.h"
 
 #ifndef COMPANY_H_
 #define COMPANY_H_
 
+#include <string>
+#include <vector>
+#include "../headers/defs.h"
+#include "../headers/Job.h"
 using namespace std;
-// for company types:
-#define DATA_STORAGE 0;
-#define DIGITAL_MEDIA 1;
-#define E_COMMERCE 2;
-#define GAMING 3;
-#define RT 4;
-#define SECURITY 5;
-
+/* TODO: delete this!
+ // for company types:
+ #define DATA_STORAGE 0;
+ #define DIGITAL_MEDIA 1;
+ #define E_COMMERCE 2;
+ #define GAMING 3;
+ #define RT 4;
+ #define SECURITY 5;
+ */
 
 class Company {
+public:
+	Company(string name, int type, int SN, int recruitingPolicy, float QL_Min);
+	~Company();
+	//	Company(const Company& c); shallow copy - no need for a ctor.
+	string getName();
+	int getType() {
+		return type;
+	}
+	int getSN() {
+		return SN;
+	}
+	vector<Job> getJobOpenings(){
+		return jobOpenings;
+	}
+	int getRecruitingPolicy(){
+		return recruitingPolicy;
+	}
+	float getQL_Min() {
+		return QL_Min;
+	}
+private:
 	string name;
 	int type;
 	int SN;
-	vector<job> jobOpenings;
+	vector<Job> jobOpenings;
 	int recruitingPolicy;
 	float QL_Min;
 };
