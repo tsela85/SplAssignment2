@@ -5,16 +5,22 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/AppLogger.cpp \
+../src/Company.cpp \
+../src/CompanyTest.cpp \
 ../src/EventsConfiguration.cpp \
 ../src/main.cpp 
 
 OBJS += \
 ./src/AppLogger.o \
+./src/Company.o \
+./src/CompanyTest.o \
 ./src/EventsConfiguration.o \
 ./src/main.o 
 
 CPP_DEPS += \
 ./src/AppLogger.d \
+./src/Company.d \
+./src/CompanyTest.d \
 ./src/EventsConfiguration.d \
 ./src/main.d 
 
