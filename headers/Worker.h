@@ -29,7 +29,7 @@ public:
 	/**
 	 * return a copy of this worker with a pointer to the origin (this Worker).
 	 */
-	Worker copy(Worker worker);
+	Worker copy();
 
 	/**
 	 * return the Worker's ID
@@ -56,6 +56,10 @@ public:
 	 */
 	Worker getOrigin();
 
+	/**
+	 * sets the Worker's origin worker in the HRC database
+	 */
+	void setOrigin();
 
 };
 #endif /* WORKER_H_ */

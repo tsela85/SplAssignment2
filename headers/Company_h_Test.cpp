@@ -12,26 +12,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(Company_h_Test);
  */
 void Company_h_Test::setUp()
 {
-	/*Poco::Random rnd = Poco::Random(256);
-	 type = rnd.next(6);
-	 int SN = rnd.next();
-	 int recPol = rnd.next(6);
-	 float QL_Min = rnd.nextFloat();
-	 string rndstr0 = "";
-	 int iMax = rnd.next(20);
-	 for (int i = 0; i < iMax; ++i) {
-	 rndstr0 = rnd.nextChar() + rndstr0;
-	 }
-	 string rndstr = rndstr0;
-	 vector<Job> vec();
-	 string empty = "";
-	 float zero = 0.0;
-	 c(empty,1,1,1,zero);
-	 c.type = type;
-	 c.SN = SN;
-	 c.recruitingPolicy = recPol;
-	 c.QL_Min = QL_Min;
-	 //	c.jobOpenings = vec;*/
 }
 void Company_h_Test::tearDown()
 {
