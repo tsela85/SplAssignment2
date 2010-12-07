@@ -25,8 +25,9 @@ using namespace std;
 
 class Company {
 public:
+	Company();
 	Company(string name, int type, int SN, int recruitingPolicy, float QL_Min);
-	~Company();
+//	~Company();
 	//	Company(const Company& c); shallow copy - no need for a ctor.
 	string getName();
 	int getType() {
@@ -44,7 +45,7 @@ public:
 	float getQL_Min() {
 		return QL_Min;
 	}
-private:
+//private:
 	string name;
 	int type;
 	int SN;

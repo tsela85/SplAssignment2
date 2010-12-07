@@ -12,19 +12,15 @@
 #ifdef ECUT_MAIN
 
 #include "cppunit/extensions/HelperMacros.h"
+#include "../headers/Company.h"
 
 class CompanyTest : public CPPUNIT_NS::TestFixture {
 public:
 	void setUp();
 	void tearDown();
-	void testCompany();
-	void testDCompany();
-	void testCompany_1();
 	CPPUNIT_TEST_SUITE(CompanyTest);
-	CPPUNIT_TEST(testCompany);
-	CPPUNIT_TEST(testDCompany);
-	CPPUNIT_TEST(testCompany_1);
 	CPPUNIT_TEST_SUITE_END();
+	Company c;
 };
 
 #endif /* ECUT_MAIN */
