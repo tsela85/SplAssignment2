@@ -4,3 +4,8 @@
 *.o
 #ignore Debug
 *Debug/*
+#ignore ECUT
+*ecut*
+*ECUT*
+
+.gitignore.orig
