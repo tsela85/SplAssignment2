@@ -2,8 +2,8 @@
 //Assignment 2
 //Last change 26/11/10
 
-#ifndef StockReport_H
-#define StockReport_H
+#ifndef HRCReport_H
+#define HRCReport_H
 
 #include "JobType.h"
 #include "SkillType.h"

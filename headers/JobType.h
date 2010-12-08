@@ -34,7 +34,7 @@ namespace ass2{
 		{
 			if ("data_storage" == job_type)
 				m_jobType =  DATA_STORAGE;
-			else if ("degital_media" == job_type)
+			else if ("digital_media" == job_type)
 				m_jobType =  DIGITAL_MEDIA;
 			else if ("e_commerce" == job_type)
 				m_jobType =  E_COMMERCE;

@@ -5,6 +5,8 @@
  *      Author: Tom and Aviad
  */
 #include "../headers/defs.h"
+#include "../headers/SkillType.h"
+#include "../headers/JobType.h"
 
 #ifndef WORKER_H_
 #define WORKER_H_
@@ -15,8 +17,8 @@ class Worker {//TODO: is this necessary??
 
 private:
 	int ID;
-	bool skills[6]; // according to numbering in page 2.
-	bool desiredJobTypes[6];
+	SkillType skills[6]; // according to numbering in page 2.
+	JobType desiredJobTypes[6];
 	int expectedSalary;
 	Worker *origin;
 
@@ -24,7 +26,7 @@ public:
 	/**
 //	 * a new Worker contractor
 	 */
-	Worker(int ID, bool skills[6], bool desiredJobTypes[6], int expectedSalary);
+	Worker(int ID, SkillType skills[6], JobType desiredJobTypes[6], int expectedSalary);
 
 	/**
 	 * return a copy of this worker with a pointer to the origin (this Worker).

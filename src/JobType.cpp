@@ -1,9 +1,9 @@
 /*
- * CommonDef.cpp
+ * JobType.cpp
  *
  *  Created on: Nov 26, 2010
  */
-#include "JobType.h"
+#include "../headers/JobType.h"
 
 namespace ass2
 {

@@ -10,7 +10,7 @@ void CompanyTest::setUp()
 	Poco::Random rnd = Poco::Random(255);
 	int type = rnd.next(6);
 	int SN = rnd.next();
-	int recPol = rnd.next(6);
+	int recPol = rnd.next(3);
 	float QL_Min = rnd.nextFloat();
 	string rndstr = "";
 	int iMax = rnd.next(20);

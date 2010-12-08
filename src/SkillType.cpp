@@ -1,5 +1,5 @@
 /*
- * CommonDef.cpp
+ * SkillType.cpp
  *
  *  Created on: Nov 26, 2010
  */

@@ -12,6 +12,7 @@
 #include <vector>
 #include "../headers/defs.h"
 #include "../headers/Job.h"
+
 using namespace std;
 /* TODO: delete this!
  // for company types:

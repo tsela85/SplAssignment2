@@ -22,7 +22,7 @@ void Company_h_Test::testgetName() {
 	Poco::Random rnd = Poco::Random(256);
 	int type = rnd.next(6);
 	int SN = rnd.next();
-	int recPol = rnd.next(6);
+	int recPol = rnd.next(3);
 	float QL_Min = rnd.nextFloat();
 	string rndstr0 = "";
 	int iMax = rnd.next(20);
@@ -47,7 +47,7 @@ void Company_h_Test::testgetType() {
 	Poco::Random rnd = Poco::Random(256);
 	int type = rnd.next(6);
 	int SN = rnd.next();
-	int recPol = rnd.next(6);
+	int recPol = rnd.next(3);
 	float QL_Min = rnd.nextFloat();
 	string rndstr0 = "";
 	int iMax = rnd.next(20);
@@ -72,7 +72,7 @@ void Company_h_Test::testgetSN() {
 	Poco::Random rnd = Poco::Random(256);
 	int type = rnd.next(6);
 	int SN = rnd.next();
-	int recPol = rnd.next(6);
+	int recPol = rnd.next(3);
 	float QL_Min = rnd.nextFloat();
 	string rndstr0 = "";
 	int iMax = rnd.next(20);
@@ -97,7 +97,7 @@ void Company_h_Test::testgetJobOpenings() {
 	Poco::Random rnd = Poco::Random(256);
 	int type = rnd.next(6);
 	int SN = rnd.next();
-	int recPol = rnd.next(6);
+	int recPol = rnd.next(3);
 	float QL_Min = rnd.nextFloat();
 	string rndstr0 = "";
 	int iMax = rnd.next(20);
@@ -149,7 +149,7 @@ void Company_h_Test::testgetQL_Min() {
 	Poco::Random rnd = Poco::Random(256);
 	int type = rnd.next(6);
 	int SN = rnd.next();
-	int recPol = rnd.next(6);
+	int recPol = rnd.next(3);
 	float QL_Min = rnd.nextFloat();
 	string rndstr0 = "";
 	int iMax = rnd.next(20);
