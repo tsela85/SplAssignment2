@@ -70,10 +70,14 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.845822803.1050385377" name="SkillType.h" rcbsApplicability="disable" resourcePath="headers/SkillType.h" toolsToInvoke=""/>
+					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.845822803.1221773201" name="SkillType.cpp" rcbsApplicability="disable" resourcePath="src/SkillType.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.220976980.1432307849">
+						<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.220976980.1432307849" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.220976980"/>
+					</fileInfo>
 					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=".ecut-sources"/>
-						<entry excluding="SkillType.h" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
-						<entry excluding="SkillType.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

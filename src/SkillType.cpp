@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 26, 2010
  */
-#include "SkillType.h"
+#include "../headers/SkillType.h"
 
 namespace ass2
 {
