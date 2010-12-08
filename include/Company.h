@@ -10,8 +10,8 @@
 
 #include <string>
 #include <vector>
-#include "../headers/defs.h"
-#include "../headers/Job.h"
+#include "../include/defs.h"
+#include "../include/Job.h"
 
 using namespace std;
 /* TODO: delete this!

@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 26, 2010
  */
-#include "../headers/JobType.h"
+#include "../include/JobType.h"
 
 namespace ass2
 {

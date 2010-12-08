@@ -1,6 +1,6 @@
 
 #ifdef ECUT_MAIN
-#include "../headers/Worker_h_Test.h"
+#include "../include/Worker_h_Test.h"
 #include <iterator>
 #include <algorithm>
 #include "Company.h"

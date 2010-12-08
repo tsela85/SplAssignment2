@@ -5,7 +5,7 @@
  *      Author: Tom and Aviad
  */
 
-#include "../headers/Company.h"
+#include "../include/Company.h"
 
 //class Company {
 //private:

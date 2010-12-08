@@ -2,8 +2,8 @@
  * Generated CppUnit test driver template.
  * To build it, add the following line at the end of
  * your existing Makefile:
- *    include headers/Worker_h_Test.mk
- * Build the headers/Worker_h_Test target from the Make Target view
+ *    include include/Worker_h_Test.mk
+ * Build the include/Worker_h_Test target from the Make Target view
  */
 
 #ifndef TEST_Worker_h_Test
@@ -12,7 +12,7 @@
 #ifdef ECUT_MAIN
 
 #include "cppunit/extensions/HelperMacros.h"
-#include "../headers/Worker.h"
+#include "../include/Worker.h"
 
 class Worker_h_Test : public CPPUNIT_NS::TestFixture {
 public:

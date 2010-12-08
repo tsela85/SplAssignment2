@@ -1,4 +1,4 @@
-#include "../headers/HRCReport.h"
+#include "../include/HRCReport.h"
 #include <iostream>
 #include <iomanip>
 

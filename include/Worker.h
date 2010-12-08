@@ -4,9 +4,9 @@
  *  Created on: Dec 5, 2010
  *      Author: Tom and Aviad
  */
-#include "../headers/defs.h"
-#include "../headers/SkillType.h"
-#include "../headers/JobType.h"
+#include "../include/defs.h"
+#include "../include/SkillType.h"
+#include "../include/JobType.h"
 
 #ifndef WORKER_H_
 #define WORKER_H_
