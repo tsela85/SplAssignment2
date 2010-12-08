@@ -5,6 +5,8 @@
 #ignore Debug
 *Debug*
 Debug*
+*Debug/
+Debug/
 #ignore ECUT
 *ecut*
 *ECUT*
