@@ -53,7 +53,7 @@ private:
 		return this.origin;
 	}
 
-	void setOrigin(Worker worker) {
+	void setOrigin(Worker worker) { // TODO: add to .h
 		this.origin=worker;
 	}
 
