@@ -22,6 +22,7 @@ int main(int argc, char** argv)
         // Load configuration (events' descriptions)
         CEventsConfiguration eventsConfFile(argv[1]);
         Poco::DateTime now;
+
         // Loop on all events and output days differences
         for (int i = 0; i < eventsConfFile.GetMyEventsCount(); i++)
         {

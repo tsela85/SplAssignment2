@@ -3,7 +3,8 @@
 #ignore object files
 *.o
 #ignore Debug
-*Debug/*
+*Debug*
+Debug*
 #ignore ECUT
 *ecut*
 *ECUT*
