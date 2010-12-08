@@ -29,7 +29,9 @@ public:
 	Company(string name, int type, int SN, int recruitingPolicy, float QL_Min);
 //	~Company();
 	//	Company(const Company& c); shallow copy - no need for a ctor.
-	string getName();
+	string getName() {
+		return name;
+	}
 	int getType() {
 		return type;
 	}
