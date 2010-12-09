@@ -9,25 +9,22 @@
 #define HRC_H_
 
 #include <map>
+#include <set>
+#include <vector>
 #include <memory>
 #include "Poco/DateTime.h"
 #include "Poco/Timespan.h"
-#include "boost/shared_ptr.hpp"
 #include "../include/Worker.h"
 #include "../include/Job.h"
 #include "../include/Company.h"
+#include "../include/Placement.hpp"
 #include <boost/ptr_container/ptr_list.hpp>
+#include "../include/defs.h"
 
-typedef std::auto_ptr<Worker> a_p_Worker;
-typedef boost::shared_ptr<Worker> s_p_Worker;
-typedef std::auto_ptr<Company> a_p_Company;
-typedef boost::shared_ptr<Company> s_p_Company;
-typedef std::auto_ptr<Job> a_p_Job;
-typedef boost::shared_ptr<Job> s_p_Job;
 
 class HRC {
 private:
-	std::map<int, s_p_Worker> candidates;
+	std::map<int, s_p_Worker> workers;
 	std::map<int, s_p_Job> jobs;
 	std::map<int, s_p_Company> companies;
 	std::list<s_p_Worker> seekers;
@@ -37,6 +34,8 @@ private:
 	int Company_Rep;
 	int Seeker_rep;
 	int strategy;
+	vector<set<Placement> > placementsByJobType;
+	vector<set<Placement> > placementsBySkillType;
 
 public:
 
@@ -72,17 +71,21 @@ public:
 
 	vector<s_p_Worker> getApplicants(s_p_Job jobPtr);
 
-	s_p_Worker screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+	bool screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants,
+			s_p_Worker choosenOne);
 
-	s_p_Worker screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+	bool screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
+			s_p_Worker choosenOne);
 
-	s_p_Worker screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+	bool screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
+			s_p_Worker choosenOne);
 
-	s_p_Worker screenApplicantsCostEffective(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+	bool screenApplicantsCostEffective(s_p_Job jobPtr,
+			vector<s_p_Worker> applicants, s_p_Worker choosenOne);
 
 	bool compareSalaries(s_p_Worker* w1, s_p_Worker* w2);
 
-	double QL(s_p_Worker worker, Job job);
+	float QL(s_p_Worker worker, Job job);
 };
 
 #endif /* HRC_H_ */

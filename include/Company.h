@@ -14,6 +14,7 @@
 #include "../include/Job.h"
 
 using namespace std;
+
 /* TODO: delete this!
  // for company types:
  #define DATA_STORAGE 0;
@@ -56,5 +57,6 @@ public:
 	int recruitingPolicy;
 	float QL_Min;
 };
+typedef boost::shared_ptr<Company> s_p_Company;
 
 #endif /* COMPANY_H_ */

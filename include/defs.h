@@ -8,6 +8,20 @@
 #ifndef DEFS_H_
 #define DEFS_H_
 
+#include "boost/shared_ptr.hpp"
+#include "../include/Worker.h"
+//#include "../include/Company.h"
+#include "../include/Job.h"
+
+
+//typedef std::auto_ptr<Worker> a_p_Worker;
+typedef boost::shared_ptr<Worker> s_p_Worker;
+//typedef std::auto_ptr<Company> a_p_Company;
+
+//typedef std::auto_ptr<Job> a_p_Job;
+typedef boost::shared_ptr<Job> s_p_Job;
+
+/*
 // for skills:
 #define CPP 0
 #define JAVA 1
@@ -23,6 +37,7 @@
 #define GAMING 3
 #define RT 4
 #define SECURITY 5
+*/
 
 //rec strategies
 #define CHEAP 0
