@@ -10,6 +10,7 @@
 #ifndef JOB_H_
 #define JOB_H_
 class Job {
+public:
 	int SN;
 	bool skills[6];
 	int CompanySN;
