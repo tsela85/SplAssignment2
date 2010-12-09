@@ -64,7 +64,25 @@ public:
 
 	void match();
 
-	s_p_Worker matchForJob(s_p_Job jobPtr);
+	bool matchForJob(s_p_Job jobPtr, s_p_Worker workerPtr);
+
+	void candidate_placement(s_p_Worker placedWorker, s_p_Job job);
+
+	void copySkills(vector<bool> skills, int size, Worker worker);
+
+	vector<s_p_Worker> getApplicants(s_p_Job jobPtr);
+
+	s_p_Worker screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+
+	s_p_Worker screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+
+	s_p_Worker screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+
+	s_p_Worker screenApplicantsCostEffective(s_p_Job jobPtr, vector<s_p_Worker> applicants);
+
+	bool compareSalaries(s_p_Worker* w1, s_p_Worker* w2);
+
+	double QL(s_p_Worker worker, Job job);
 };
 
 #endif /* HRC_H_ */
