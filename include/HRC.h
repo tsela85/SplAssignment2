@@ -17,7 +17,7 @@
 #include "../include/Worker.h"
 #include "../include/Job.h"
 #include "../include/Company.h"
-#include "../include/Placement.hpp"
+#include "../include/Placement.h"
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"
 
@@ -31,12 +31,12 @@ private:
 	std::list<s_p_Worker> seekers;
 	std::list<s_p_Job> openings;
 	long profit;
-	Placement del_me();
+//	Placement del_me;
 	Poco::DateTime time;
 	int Company_Rep;
 	int Seeker_rep;
 	int strategy;
-	vector<set<Placement> > placementsBySkillType;
+	vector<set<Worker> > placementsBySkillType;
 	vector<set<Placement> > placementsByJobType; //FIXME: should be 'Placement'
 
 public:

@@ -5,88 +5,57 @@
  *      Author: Tom and Aviad
  */
 #include "../include/defs.h"
-#include <vector>
 #include "Poco/DateTime.h"
-//#include "../include/SkillType.h"
-//#include "../include/JobType.h"
-
 #ifndef WORKER_H_
 #define WORKER_H_
 
-class Worker {//TODO: is this necessary??
+
+class Worker {
 
 private:
 	int ID;
-	std::vector<int> skills;//[6]; // according to numbering in page 2.
+	int skills[6]; // according to numbering in page 2.
 	bool desiredJobTypes[6];
 	int expectedSalary;
-	Worker *origin;
+	Poco::DateTime *time;
 	Poco::DateTime inDate;
 	Poco::DateTime outDate;
 	bool occupied;
 
 public:
-	/**
-	 //	 * a new Worker contractor
-	 */
-	Worker(int ID, bool skills[6], bool desiredJobTypes[6], int expectedSalary);
 
-	/**
-	 * return a copy of this worker with a pointer to the origin (this Worker).
-	 */
-	Worker copy();
+	/** a new Worker contractor */
+	Worker(int ID, bool skills[6], bool desiredJobTypes[6], int expectedSalary, Poco::DateTime *time);
 
-	/**
-	 * return the Worker's ID
-	 */
-	int getID() {
-		return ID;
-	}
+	/** a Worker destructor */
+	~Worker();
 
-	/**
-	 * return the Worker's skills
-	 */
-	std::vector<int> getSkills() {
-		return skills;
-	}
+	/** return the Worker's ID */
+	int getID();
 
-	/**
-	 * return the Worker's desired job types
-	 */
-	int getDesiredJobTypes();
+	/** return the Worker's skills */
+	void getSkills(int skills[]);
 
-	/**
-	 * return the Worker's expected salary
-	 */
-	int getExpectedSalary() {
-		return expectedSalary;
-	}
+	/** return the Worker's desired job types */
+	void getDesiredJobTypes(bool _desiredJobTypes[]);
 
-	/**
-	 * return the Worker's origin in the HRC database
-	 */
+	/** return the Worker's expected salary */
+	int getExpectedSalary();
+
+	/** return the Worker's origin in the HRC database */
 	Worker getOrigin();
 
-	/**
-	 * sets the Worker's origin worker in the HRC database
-	 */
+	/** sets the Worker's origin worker in the HRC database */
 	void setOrigin();
 
-	void setInDate(Poco::DateTime time) {
-		inDate = time;
-	}
+	/** returns the date the worker joined the HRC seekers database */
+	Poco::DateTime getInDate();
 
-	Poco::DateTime getInDate() {
-		return inDate;
-	}
+	/** sets the date the worker left the HRC seekers database */
+	void setOutDate();
 
-	void setOutDate(Poco::DateTime time) {
-		outDate = time;
-	}
-
-	Poco::DateTime getOutDate() {
-		return outDate;
-	}
+	/** returns the date the worker left the HRC seekers database */
+	Poco::DateTime getOutDate();
 
 };
 #endif /* WORKER_H_ */

@@ -105,7 +105,8 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 	}
 	for (list<s_p_Worker>::iterator it = seekers.begin(); it != seekers.end(); ++it) {
 		Worker worker = **it; //a list of pointers (s_p_Worker)
-		vector<int> skills = worker.getSkills();
+		int skills[6];
+		worker.getSkills(skills);
 		//		copySkills(skills, 6, worker);
 		bool workerFits = true;
 		for (int i = 0; i < 6 && workerFits; ++i) {
@@ -231,7 +232,8 @@ bool HRC::compareSalaries(s_p_Worker* w1, s_p_Worker* w2) {
 }
 
 float HRC::QL(s_p_Worker worker, Job job) {
-	vector<int> skills = worker->getSkills();
+	int skills[6];
+	worker->getSkills(skills);
 	float tot(0);
 	float num(0);
 	for (int j = 0; j < 6; ++j) {
