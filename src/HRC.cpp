@@ -21,11 +21,17 @@ HRC::HRC() {
 		placementsBySkillType.push_back(set<Placement, classcomp> ());
 	}
 	profit = 0;
+	monthly_candidates = 0;
+	monthly_jobs = 0;
+	monthly_placements = 0;
 }
 
-HRC::HRC(Poco::DateTime sDate) {
+HRC::HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int _strategy) {
 	HRC();
 	time = sDate;
+	Seeker_Rep = _Seeker_rep;
+	Company_Rep = _Company_rep;
+	strategy = _strategy;
 }
 
 void HRC::setDate(Poco::DateTime newDate) {
@@ -43,21 +49,52 @@ void HRC::addCandidate(Worker w) {
 	s_p_Worker workerPtr(new Worker(w));
 	workers.insert(std::make_pair(w.getID(), workerPtr));
 	seekers.push_back(workerPtr);
+	monthly_candidates++;
 }
 
 void HRC::addJob(Job j) {
 	s_p_Job jobPtr(new Job(j));
 	jobs.insert(std::make_pair(j.SN, jobPtr));
 	openings.push_back(jobPtr);
+	monthly_jobs++;
 }
 
-int HRC::compute_Company_Rep() {
+void HRC::update_Company_Rep() {
+	float j,n,p;
+	n = monthly_jobs;
+	p = monthly_placements;
+	j = (p / n) * 100;
+	int delta = 0;
+	if (j <= 33) {
+		delta = -1;
+	} else if (j >= 67) {
+		delta = 1;
+	}
+	int new_rep = Company_Rep + delta;
+	new_rep = std::min(5,new_rep);
+	new_rep = std::max(1,new_rep);
+	Company_Rep = new_rep;
+}
 
-
+void HRC::update_Seeker_Rep() {
+	float c,n,p;
+	n = monthly_candidates;
+	p = monthly_placements;
+	c = (p / n) * 100;
+	int delta = 0;
+	if (c <= 33) {
+		delta = -1;
+	} else if (c >= 67) {
+		delta = 1;
+	}
+	int new_rep = Seeker_Rep + delta;
+	new_rep = std::min(5,new_rep);
+	new_rep = std::max(1,new_rep);
+	Seeker_Rep = new_rep;
 }
 
 void HRC::match() {
-		s_p_Worker placedWorker;
+	s_p_Worker placedWorker;
 	for (list<s_p_Job>::iterator it = openings.begin(); it != openings.end(); ++it) {
 		if (matchForJob(*it, placedWorker)) {
 			candidate_placement(placedWorker, *it);
@@ -67,6 +104,7 @@ void HRC::match() {
 }
 void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	placedWorker->setOutDate();
+	monthly_placements++;
 	seekers.remove(placedWorker);
 	openings.remove(job);
 	float salary = placedWorker->getExpectedSalary();
@@ -85,7 +123,6 @@ void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	}
 	placementsByJobType[jobType].insert(p);
 	placementsByDate.insert(p);
-
 
 }
 
@@ -243,9 +280,9 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 	return found;
 }
 
-bool HRC::compareSalaries(s_p_Worker* w1, s_p_Worker* w2) {
-	return ((*w1)->getExpectedSalary()) < ((*w2)->getExpectedSalary());
-}
+//bool HRC::compareSalaries(s_p_Worker* w1, s_p_Worker* w2) {
+//	return ((*w1)->getExpectedSalary()) < ((*w2)->getExpectedSalary());
+//}
 
 float HRC::QL(s_p_Worker worker, Job job) {
 	int skills[6];
@@ -264,5 +301,4 @@ float HRC::QL(s_p_Worker worker, Job job) {
 	}
 	return ret;
 }
-
 

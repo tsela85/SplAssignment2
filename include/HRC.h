@@ -49,17 +49,20 @@ private:
 	long profit;
 	Poco::DateTime time;
 	int Company_Rep;
-	int Seeker_rep;
+	int Seeker_Rep;
 	int strategy;
 	vector<set<Placement, classcomp> > placementsBySkillType;
 	vector<set<Placement, classcomp> > placementsByJobType;
 	set<Placement, classcomp> placementsByDate;
+	int monthly_candidates;
+	int monthly_jobs;
+	int monthly_placements;
 
 public:
 
 	HRC();
 
-	HRC(Poco::DateTime sDate);
+	HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int strategy);
 
 	void setDate(Poco::DateTime newDate);
 
@@ -77,7 +80,9 @@ public:
 		strategy = s;
 	}
 
-	int compute_Company_Rep();
+	void update_Company_Rep();
+
+	void update_Seeker_Rep();
 
 	void match();
 
