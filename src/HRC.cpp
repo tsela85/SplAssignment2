@@ -17,8 +17,8 @@ HRC::HRC() {
 	 jobs();
 	 companies();*/
 	for (int i = 0; i < 6; ++i) {
-		placementsByJobType.push_back(set<Placement> ());
-		placementsBySkillType.push_back(set<Placement> ());
+		placementsByJobType.push_back(set<Placement, classcomp> ());
+		placementsBySkillType.push_back(set<Placement, classcomp> ());
 	}
 	profit = 0;
 }
@@ -53,11 +53,12 @@ void HRC::addJob(Job j) {
 
 int HRC::compute_Company_Rep() {
 
+
 }
 
 void HRC::match() {
-	for (list<s_p_Job>::iterator it = openings.begin(); it != openings.end(); ++it) {
 		s_p_Worker placedWorker;
+	for (list<s_p_Job>::iterator it = openings.begin(); it != openings.end(); ++it) {
 		if (matchForJob(*it, placedWorker)) {
 			candidate_placement(placedWorker, *it);
 		}
@@ -65,11 +66,26 @@ void HRC::match() {
 
 }
 void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
+	placedWorker->setOutDate();
 	seekers.remove(placedWorker);
 	openings.remove(job);
-	int salary = placedWorker->getExpectedSalary();
+	float salary = placedWorker->getExpectedSalary();
 	Poco::DateTime outDate = time;
 	int jobType = ((companies.find(job->CompanySN))->second)->type;
+	Placement p;
+	p.salary = salary;
+	p.outDate = time;
+	p.job = job;
+	p.job_type = jobType;
+	p.worker = placedWorker;
+	for (int i = 0; i < 6; ++i) {
+		if (job->skills[i]) {
+			placementsBySkillType[i].insert(p); // insert Placement p by SkillType
+		}
+	}
+	placementsByJobType[jobType].insert(p);
+	placementsByDate.insert(p);
+
 
 }
 

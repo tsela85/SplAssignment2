@@ -28,8 +28,13 @@ struct Placement {
 	s_p_Worker worker;
 	float salary;
 	int job_type;
+	Poco::DateTime outDate;
 
+};
 
+struct classcomp {//to order the set by Poco::DateTime
+  bool operator() (Placement lhs, Placement rhs) const
+  {return lhs.worker->getOutDate() < rhs.worker->getOutDate();}
 };
 
 
@@ -42,13 +47,13 @@ private:
 	std::list<s_p_Worker> seekers;
 	std::list<s_p_Job> openings;
 	long profit;
-//	Placement del_me;
 	Poco::DateTime time;
 	int Company_Rep;
 	int Seeker_rep;
 	int strategy;
-	vector<set<Placement> > placementsBySkillType;
-	vector<set<Placement> > placementsByJobType; //FIXME: should be 'Placement'
+	vector<set<Placement, classcomp> > placementsBySkillType;
+	vector<set<Placement, classcomp> > placementsByJobType;
+	set<Placement, classcomp> placementsByDate;
 
 public:
 
