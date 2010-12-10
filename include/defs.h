@@ -10,41 +10,75 @@
 
 #include "boost/shared_ptr.hpp"
 #include "../include/Worker.h"
-//#include "../include/Company.h"
+#include "../include/Company.h"
 #include "../include/Job.h"
-
 
 //typedef std::auto_ptr<Worker> a_p_Worker;
 typedef boost::shared_ptr<Worker> s_p_Worker;
 //typedef std::auto_ptr<Company> a_p_Company;
-
+typedef boost::shared_ptr<Company> s_p_Company;
 //typedef std::auto_ptr<Job> a_p_Job;
 typedef boost::shared_ptr<Job> s_p_Job;
 
 /*
-// for skills:
-#define CPP 0
-#define JAVA 1
-#define SCRIPT 2
-#define WEB 3
-#define SYSTEM 4
-#define QA 5
+ // for skills:
+ #define CPP 0
+ #define JAVA 1
+ #define SCRIPT 2
+ #define WEB 3
+ #define SYSTEM 4
+ #define QA 5
 
-// for desired job types:
-#define DATA_STORAGE 0
-#define DIGITAL_MEDIA 1
-#define E_COMMERCE 2
-#define GAMING 3
-#define RT 4
-#define SECURITY 5
-*/
+ // for desired job types:
+ #define DATA_STORAGE 0
+ #define DIGITAL_MEDIA 1
+ #define E_COMMERCE 2
+ #define GAMING 3
+ #define RT 4
+ #define SECURITY 5
+ */
 
 //rec strategies
 #define CHEAP 0
 #define LAVISH 1
 #define COST_EFFECTIVE 2
 
+std::string int2EJobType(int type) {
+	switch (type) {
+	case 0:
+		return "data_storage";
+	case 1:
+		return "digital_media";
+	case 2:
+		return "e_commerce";
+	case 3:
+		return "gaming";
+	case 4:
+		return "rt";
+	case 5:
+		return "security";
+	default:
+		return "no such type";
+	}
+}
 
-
+std::string int2ESkillType(int skill) {
+	switch (skill) {
+	case 0:
+		return "cpp";
+	case 1:
+		return "java";
+	case 2:
+		return "script";
+	case 3:
+		return "web";
+	case 4:
+		return "system";
+	case 5:
+		return "qa";
+	default:
+			return "no such skill";
+	}
+}
 
 #endif /* DEFS_H_ */

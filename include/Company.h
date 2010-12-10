@@ -10,7 +10,7 @@
 
 #include <string>
 #include <vector>
-#include "../include/defs.h"
+//#include "../include/defs.h"
 #include "../include/Job.h"
 
 using namespace std;
@@ -27,7 +27,8 @@ using namespace std;
 
 class Company {
 public:
-	Company();
+//	Company();
+
 	Company(string name, int type, int SN, int recruitingPolicy, float QL_Min);
 //	~Company();
 	//	Company(const Company& c); shallow copy - no need for a ctor.
@@ -57,6 +58,6 @@ public:
 	int recruitingPolicy;
 	float QL_Min;
 };
-typedef boost::shared_ptr<Company> s_p_Company;
+
 
 #endif /* COMPANY_H_ */

@@ -6,6 +6,7 @@
  */
 #include "../include/defs.h"
 #include <vector>
+#include "Poco/DateTime.h"
 //#include "../include/SkillType.h"
 //#include "../include/JobType.h"
 
@@ -20,6 +21,9 @@ private:
 	bool desiredJobTypes[6];
 	int expectedSalary;
 	Worker *origin;
+	Poco::DateTime inDate;
+	Poco::DateTime outDate;
+	bool occupied;
 
 public:
 	/**
@@ -67,6 +71,22 @@ public:
 	 * sets the Worker's origin worker in the HRC database
 	 */
 	void setOrigin();
+
+	void setInDate(Poco::DateTime time) {
+		inDate = time;
+	}
+
+	Poco::DateTime getInDate() {
+		return inDate;
+	}
+
+	void setOutDate(Poco::DateTime time) {
+		outDate = time;
+	}
+
+	Poco::DateTime getOutDate() {
+		return outDate;
+	}
 
 };
 #endif /* WORKER_H_ */

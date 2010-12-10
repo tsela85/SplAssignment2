@@ -10,13 +10,15 @@
 #include <limits>
 #include "../include/JobType.h"
 
+typedef vector<s_p_Worker> v_p_Worker;
+
 HRC::HRC() {
 	/*candidates();
 	 jobs();
 	 companies();*/
 	for (int i = 0; i < 6; ++i) {
-		placementsByJobType.push_back(set<Placement>());
-		placementsBySkillType.push_back(set<Placement>());
+		placementsByJobType.push_back(set<Placement> ());
+		placementsBySkillType.push_back(set<Placement> ());
 	}
 	profit = 0;
 }
@@ -66,8 +68,8 @@ void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	seekers.remove(placedWorker);
 	openings.remove(job);
 	int salary = placedWorker->getExpectedSalary();
-	Poco::DateTime date = time;
-	//	JobType jobType = ((companies.find(job->CompanySN))->second)->type;//TODO
+	Poco::DateTime outDate = time;
+	int jobType = ((companies.find(job->CompanySN))->second)->type;
 
 }
 
@@ -116,7 +118,25 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 			applicants.push_back(*it);
 		}
 	}
-	return applicants;
+	if (strategy == 1) {
+		return applicants;
+	} else { //strategy == FAIR
+		float tot = 0;
+		float num = 0;
+		for (v_p_Worker::iterator it = applicants.begin(); it
+				!= applicants.end(); ++it) {
+			tot += (time - (*it)->getInDate()).days();
+			num += 1;
+		}
+		float avg = tot / num;
+		for (v_p_Worker::iterator it = applicants.begin(); it
+				!= applicants.end(); ++it) {
+			if ((time - (*it)->getInDate()).days() < avg) {
+				it = applicants.erase(it);
+			}
+		}
+		return applicants;
+	}
 }
 
 bool HRC::screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants,
@@ -226,3 +246,5 @@ float HRC::QL(s_p_Worker worker, Job job) {
 	}
 	return ret;
 }
+
+

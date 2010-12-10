@@ -21,6 +21,7 @@
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"
 
+typedef boost::shared_ptr<Company> s_p_Company;
 
 class HRC {
 private:
@@ -86,6 +87,10 @@ public:
 	bool compareSalaries(s_p_Worker* w1, s_p_Worker* w2);
 
 	float QL(s_p_Worker worker, Job job);
+
+//	std::string int2EJobType(int type);
 };
+
+
 
 #endif /* HRC_H_ */

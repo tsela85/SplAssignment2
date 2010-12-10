@@ -28,6 +28,8 @@ namespace ass2{
 			SECURITY
 		};
 
+		JobType() {}
+
 		JobType(EjobType job_type) : m_jobType(job_type) {}
 
 		JobType(std::string job_type)

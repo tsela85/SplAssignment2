@@ -29,6 +29,8 @@ namespace ass2{
 			QA
 		};
 
+		SkillType() {}
+
 		SkillType(ESkillType skill_type) : m_skillType(skill_type) {}
 
 		SkillType(std::string skill)
