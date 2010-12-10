@@ -17,11 +17,16 @@
 #include "../include/Worker.h"
 #include "../include/Job.h"
 #include "../include/Company.h"
-#include "../include/Placement.h"
+//#include "../include/Placement.h"
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"
 
 typedef boost::shared_ptr<Company> s_p_Company;
+
+struct Placement {
+	s_p_Job job;
+	s_p_Worker worker;
+};
 
 class HRC {
 private:
@@ -36,7 +41,7 @@ private:
 	int Company_Rep;
 	int Seeker_rep;
 	int strategy;
-	vector<set<Worker> > placementsBySkillType;
+	vector<set<Placement> > placementsBySkillType;
 	vector<set<Placement> > placementsByJobType; //FIXME: should be 'Placement'
 
 public:

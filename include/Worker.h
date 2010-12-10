@@ -9,7 +9,6 @@
 #ifndef WORKER_H_
 #define WORKER_H_
 
-
 class Worker {
 
 private:
@@ -25,7 +24,8 @@ private:
 public:
 
 	/** a new Worker contractor */
-	Worker(int ID, bool skills[6], bool desiredJobTypes[6], int expectedSalary, Poco::DateTime *time);
+	Worker(int ID, int skills[6], bool desiredJobTypes[6], int expectedSalary,
+			Poco::DateTime *time);
 
 	/** a Worker destructor */
 	~Worker();
