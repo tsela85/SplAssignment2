@@ -12,3 +12,4 @@ Debug/
 *ECUT*
 
 .gitignore.orig
+app.log

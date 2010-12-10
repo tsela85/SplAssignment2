@@ -41,42 +41,6 @@ typedef boost::shared_ptr<Job> s_p_Job;
 #define LAVISH 1
 #define COST_EFFECTIVE 2
 
-/*std::string int2EJobType(int type) {
-	switch (type) {
-	case 0:
-		return "data_storage";
-	case 1:
-		return "digital_media";
-	case 2:
-		return "e_commerce";
-	case 3:
-		return "gaming";
-	case 4:
-		return "rt";
-	case 5:
-		return "security";
-	default:
-		return "no such type";
-	}
-}
 
-std::string int2ESkillType(int skill) {
-	switch (skill) {
-	case 0:
-		return "cpp";
-	case 1:
-		return "java";
-	case 2:
-		return "script";
-	case 3:
-		return "web";
-	case 4:
-		return "system";
-	case 5:
-		return "qa";
-	default:
-		return "no such skill";
-	}
-}*/
 
 #endif /* DEFS_H_ */

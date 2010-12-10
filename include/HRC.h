@@ -110,7 +110,13 @@ public:
 
 	float QL(s_p_Worker worker, Job job);
 
-//	std::string int2EJobType(int type);
+	std::string job_type_stringer(bool types[]);
+
+	Poco::DateTime string_dater(std::string s);
+
+	std::string int2EJobType(int type);
+
+	std::string int2ESkillType(int type);
 };
 
 

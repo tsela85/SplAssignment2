@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <limits>
 #include "../include/JobType.h"
+#include <boost/algorithm/string.hpp>
 
 typedef vector<s_p_Worker> v_p_Worker;
 
@@ -60,7 +61,7 @@ void HRC::addJob(Job j) {
 }
 
 void HRC::update_Company_Rep() {
-	float j,n,p;
+	float j, n, p;
 	n = monthly_jobs;
 	p = monthly_placements;
 	j = (p / n) * 100;
@@ -71,13 +72,13 @@ void HRC::update_Company_Rep() {
 		delta = 1;
 	}
 	int new_rep = Company_Rep + delta;
-	new_rep = std::min(5,new_rep);
-	new_rep = std::max(1,new_rep);
+	new_rep = std::min(5, new_rep);
+	new_rep = std::max(1, new_rep);
 	Company_Rep = new_rep;
 }
 
 void HRC::update_Seeker_Rep() {
-	float c,n,p;
+	float c, n, p;
 	n = monthly_candidates;
 	p = monthly_placements;
 	c = (p / n) * 100;
@@ -88,8 +89,8 @@ void HRC::update_Seeker_Rep() {
 		delta = 1;
 	}
 	int new_rep = Seeker_Rep + delta;
-	new_rep = std::min(5,new_rep);
-	new_rep = std::max(1,new_rep);
+	new_rep = std::min(5, new_rep);
+	new_rep = std::max(1, new_rep);
 	Seeker_Rep = new_rep;
 }
 
@@ -300,5 +301,60 @@ float HRC::QL(s_p_Worker worker, Job job) {
 		ret = tot / num;
 	}
 	return ret;
+}
+
+std::string HRC::job_type_stringer(bool types[]) {
+	std::string s;
+	for (int i = 0; i < 6; ++i) {
+		if (types[i]) {
+			s = s + int2EJobType(i) + " ";
+		}
+	}
+	return s;
+}
+
+Poco::DateTime HRC::string_dater(std::string in_str) {
+	std::vector<std::string> strs;
+	boost::split(strs, in_str, boost::is_any_of("\\"));
+//	Poco::DateTime ret(atoi(strs[2]), atoi(strs[1]), atoi(strs[0]));
+	return Poco::DateTime(3000,10,10); //FIXME!
+
+}
+std::string HRC::int2EJobType(int type) {
+	switch (type) {
+	case 0:
+		return "data_storage";
+	case 1:
+		return "digital_media";
+	case 2:
+		return "e_commerce";
+	case 3:
+		return "gaming";
+	case 4:
+		return "rt";
+	case 5:
+		return "security";
+	default:
+		return "";
+	}
+}
+
+std::string HRC::int2ESkillType(int skill) {
+	switch (skill) {
+	case 0:
+		return "cpp";
+	case 1:
+		return "java";
+	case 2:
+		return "script";
+	case 3:
+		return "web";
+	case 4:
+		return "system";
+	case 5:
+		return "qa";
+	default:
+		return "";
+	}
 }
 
