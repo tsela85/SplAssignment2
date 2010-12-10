@@ -10,7 +10,6 @@
 #define WORKER_H_
 
 
-
 class Worker {//TODO: is this necessary??
 
 private:
@@ -27,9 +26,9 @@ public:
 	Worker(int ID, bool skills[6], bool desiredJobTypes[6], int expectedSalary);
 
 	/**
-	 * return a copy of this worker with a pointer to the origin (this Worker).
+	 * a Worker distractor
 	 */
-	Worker copy();
+	~Worker();
 
 	/**
 	 * return the Worker's ID
@@ -39,12 +38,12 @@ public:
 	/**
 	 * return the Worker's skills
 	 */
-	int getSkills();
+	void getSkills(bool skills[]);
 
 	/**
 	 * return the Worker's desired job types
 	 */
-	int getDesiredJobTypes();
+	void getDesiredJobTypes(bool _desiredJobTypes[]);
 
 	/**
 	 * return the Worker's expected salary

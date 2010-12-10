@@ -8,6 +8,10 @@ CPP_SRCS += \
 ../src/Company.cpp \
 ../src/CompanyTest.cpp \
 ../src/EventsConfiguration.cpp \
+../src/HRCReport.cpp \
+../src/JobType.cpp \
+../src/SkillType.cpp \
+../src/Worker.cpp \
 ../src/main.cpp 
 
 OBJS += \
@@ -15,6 +19,10 @@ OBJS += \
 ./src/Company.o \
 ./src/CompanyTest.o \
 ./src/EventsConfiguration.o \
+./src/HRCReport.o \
+./src/JobType.o \
+./src/SkillType.o \
+./src/Worker.o \
 ./src/main.o 
 
 CPP_DEPS += \
@@ -22,6 +30,10 @@ CPP_DEPS += \
 ./src/Company.d \
 ./src/CompanyTest.d \
 ./src/EventsConfiguration.d \
+./src/HRCReport.d \
+./src/JobType.d \
+./src/SkillType.d \
+./src/Worker.d \
 ./src/main.d 
 
 

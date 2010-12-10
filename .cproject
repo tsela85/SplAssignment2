@@ -73,7 +73,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=".ecut-sources"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
+						<entry excluding="Company_h_Test.h|Worker_h_Test.cpp|Company_h_Test.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -716,7 +716,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=".ecut-sources"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
+						<entry excluding="Company_h_Test.h|Worker_h_Test.cpp|Company_h_Test.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -1341,7 +1341,7 @@
 									<listOptionValue builtIn="false" value="/usr/include/Poco"/>
 									<listOptionValue builtIn="false" value="/usr/include"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.preprocessor.def.1750652612" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1750652612" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ECUT_MAIN=main"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2012675470" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -1356,16 +1356,16 @@
 								<option id="gnu.c.compiler.option.include.files.1961101036" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" valueType="includeFiles">
 									<listOptionValue builtIn="false" value="/home/lxmonk/workspace/Cworkspace/SplAssignment2/Debug"/>
 								</option>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.266566180" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.266566180" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ECUT_MAIN=main"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.574742473" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.2098611785" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
-								<option id="gnu.c.link.option.libs.1519493254" superClass="gnu.c.link.option.libs" valueType="libs">
+								<option id="gnu.c.link.option.libs.1519493254" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cppunit"/>
 								</option>
-								<option id="gnu.c.link.option.paths.1582041738" superClass="gnu.c.link.option.paths" valueType="libPaths">
+								<option id="gnu.c.link.option.paths.1582041738" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;/usr/lib64&quot;"/>
 								</option>
 							</tool>
