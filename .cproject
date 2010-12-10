@@ -73,7 +73,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=".ecut-sources"/>
-						<entry excluding="Company_h_Test.h|Worker_h_Test.cpp|Company_h_Test.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
+						<entry excluding="Worker_h_Test.h|Company_h_Test.h|Worker_h_Test.cpp|Company_h_Test.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -716,7 +716,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=".ecut-sources"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-						<entry excluding="Company_h_Test.h|Worker_h_Test.cpp|Company_h_Test.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
+						<entry excluding="Worker_h_Test.h|Company_h_Test.h|Worker_h_Test.cpp|Company_h_Test.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="headers"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
