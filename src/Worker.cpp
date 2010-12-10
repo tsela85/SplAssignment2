@@ -15,10 +15,10 @@ Worker::Worker(int _ID, int _skills[6], bool _desiredJobTypes[6],
 		desiredJobTypes[i] = _desiredJobTypes[i];
 	}
 	expectedSalary = _expectedSalary;
-	time = &_time;
-	inDate = _time;
-	outDate = null;
-	occupied = flase;
+	time = _time;
+	inDate = *_time;
+//	outDate = null;
+	occupied = false;
 }
 
 int Worker::getID() {

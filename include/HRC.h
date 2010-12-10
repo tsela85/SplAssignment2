@@ -26,7 +26,13 @@ typedef boost::shared_ptr<Company> s_p_Company;
 struct Placement {
 	s_p_Job job;
 	s_p_Worker worker;
+	float salary;
+	int job_type;
+
+
 };
+
+
 
 class HRC {
 private:
