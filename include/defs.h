@@ -16,27 +16,25 @@
 //typedef std::auto_ptr<Worker> a_p_Worker;
 typedef boost::shared_ptr<Worker> s_p_Worker;
 //typedef std::auto_ptr<Company> a_p_Company;
-typedef boost::shared_ptr<Company> s_p_Company;
+//typedef boost::shared_ptr<Company> s_p_Company;
 //typedef std::auto_ptr<Job> a_p_Job;
 typedef boost::shared_ptr<Job> s_p_Job;
 
-/*
- // for skills:
- #define CPP 0
- #define JAVA 1
- #define SCRIPT 2
- #define WEB 3
- #define SYSTEM 4
- #define QA 5
+// for skills:
+#define _CPP 0
+#define _JAVA 1
+#define _SCRIPT 2
+#define _WEB 3
+#define _SYSTEM 4
+#define _QA 5
 
- // for desired job types:
- #define DATA_STORAGE 0
- #define DIGITAL_MEDIA 1
- #define E_COMMERCE 2
- #define GAMING 3
- #define RT 4
- #define SECURITY 5
- */
+// for desired job types:
+#define _DATA_STORAGE 0
+#define _DIGITAL_MEDIA 1
+#define _E_COMMERCE 2
+#define _GAMING 3
+#define _RT 4
+#define _SECURITY 5
 
 //rec strategies
 #define CHEAP 0
@@ -77,7 +75,7 @@ std::string int2ESkillType(int skill) {
 	case 5:
 		return "qa";
 	default:
-			return "no such skill";
+		return "no such skill";
 	}
 }
 

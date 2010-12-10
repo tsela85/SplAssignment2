@@ -27,7 +27,7 @@ using namespace std;
 
 class Company {
 public:
-//	Company();
+	Company();
 
 	Company(string name, int type, int SN, int recruitingPolicy, float QL_Min);
 //	~Company();

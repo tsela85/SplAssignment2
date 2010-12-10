@@ -22,6 +22,8 @@ public:
 	ass2::SkillType skillType;
 	Poco::DateTime date;
 
+	Placement() {}
+
 	Placement(s_p_Worker workerPtr, s_p_Job jobPtr, int job_type,
 			int skill_type, Poco::DateTime time) {
 		worker = workerPtr;

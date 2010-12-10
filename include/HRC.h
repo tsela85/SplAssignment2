@@ -31,12 +31,13 @@ private:
 	std::list<s_p_Worker> seekers;
 	std::list<s_p_Job> openings;
 	long profit;
+	Placement del_me();
 	Poco::DateTime time;
 	int Company_Rep;
 	int Seeker_rep;
 	int strategy;
-	vector<set<Placement> > placementsByJobType;
 	vector<set<Placement> > placementsBySkillType;
+	vector<set<Placement> > placementsByJobType; //FIXME: should be 'Placement'
 
 public:
 
