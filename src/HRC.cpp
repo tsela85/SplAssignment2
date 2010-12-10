@@ -10,6 +10,7 @@
 #include <limits>
 #include "../include/JobType.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
 typedef vector<s_p_Worker> v_p_Worker;
 
@@ -316,8 +317,9 @@ std::string HRC::job_type_stringer(bool types[]) {
 Poco::DateTime HRC::string_dater(std::string in_str) {
 	std::vector<std::string> strs;
 	boost::split(strs, in_str, boost::is_any_of("\\"));
-//	Poco::DateTime ret(atoi(strs[2]), atoi(strs[1]), atoi(strs[0]));
-	return Poco::DateTime(3000,10,10); //FIXME!
+	Poco::DateTime ret(boost::lexical_cast<int>(strs[2]), boost::lexical_cast<
+			int>(strs[1]), boost::lexical_cast<int>(strs[0]));
+	return ret;
 
 }
 std::string HRC::int2EJobType(int type) {
