@@ -15,7 +15,8 @@ private:
 	int ID;
 	int skills[6]; // according to numbering in page 2.
 	bool desiredJobTypes[6];
-	int expectedSalary;
+	float expectedSalary;
+	float originSalary;
 	Poco::DateTime *time;
 	Poco::DateTime inDate;
 	Poco::DateTime outDate;
@@ -24,7 +25,7 @@ private:
 public:
 
 	/** a new Worker contractor */
-	Worker(int ID, int skills[6], bool desiredJobTypes[6], int expectedSalary,
+	Worker(int ID, int skills[6], bool desiredJobTypes[6], float expectedSalary,
 			Poco::DateTime *time);
 
 	/** a Worker destructor */
@@ -40,7 +41,7 @@ public:
 	void getDesiredJobTypes(bool _desiredJobTypes[]);
 
 	/** return the Worker's expected salary */
-	int getExpectedSalary();
+	float getExpectedSalary();
 
 	/** return the Worker's origin in the HRC database */
 	Worker getOrigin();
@@ -56,6 +57,9 @@ public:
 
 	/** returns the date the worker left the HRC seekers database */
 	Poco::DateTime getOutDate();
+
+	/** updates the workers expectedSalary according to the date he joined */
+	bool compromise();
 
 };
 #endif /* WORKER_H_ */
