@@ -47,10 +47,28 @@ int main(int argc, char** argv) {
 	}
 	vector<s_p_Worker>::iterator worker_iterator = workers.begin();
 	vector<s_p_Job>::iterator job_iterator = jobs.begin();
-//	for (int i = 0; i < )
+	for (int i = 0; i < workNum; i++) {
+		hrc.addCandidate(*worker_iterator);
+		worker_iterator++;
+	}
+	for (int j = 0; j < jobNum; j++) {
+		hrc.addJob(*job_iterator);
+	}
 	bool terminate = false;
 	while (!terminate) {
 		hrc.incDate();
+		hrc.compromise();
+		int new_workers = hrc.get_seeker_rep();
+		for (int addw = 0; addw < new_workers; addw++) {
+			hrc.addCandidate(*worker_iterator);
+			worker_iterator++;
+		}
+		int new_jobs = hrc.get_company_rep();
+		for (int addj = 0; addj < new_jobs; addj++) {
+			hrc.addJob(*job_iterator);
+			job_iterator++;
+		}
+
 	}
 	/*Poco::DateTime INITIAL_DATE(1999, 12, 31);
 	 int INIT_JOBS_NUM = 3;
