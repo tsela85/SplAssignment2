@@ -31,15 +31,15 @@ Job::Job(int _SN, bool _skills[], int _CompanySN, int _type,
 	days = 0;
 }
 
-//Job::Job(const Job &src_job) {
-//	SN = src_job.SN;
-//	memcpy(skills, src_job.skills, 6);
-//	CompanySN = src_job.CompanySN;
-//	type = src_job.type;
-//	closed = src_job.closed;
-//	inDate = src_job.inDate;
-//	days = src_job.days;
-//}
+Job::Job(const Job &src_job) {
+	SN = src_job.SN;
+	memcpy(skills, src_job.skills, 6);
+	CompanySN = src_job.CompanySN;
+	type = src_job.type;
+	closed = src_job.closed;
+	inDate = src_job.inDate;
+	days = src_job.days;
+}
 
 void Job::taken(Poco::DateTime now) {
 	closed = true;

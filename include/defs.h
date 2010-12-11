@@ -41,6 +41,9 @@ typedef boost::shared_ptr<Job> s_p_Job;
 #define LAVISH 1
 #define COST_EFFECTIVE 2
 
+// HRC strategies
+#define FAIR 0
+#define EAGER 1
 
 
 #endif /* DEFS_H_ */
