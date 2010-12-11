@@ -75,9 +75,9 @@ public:
 
 	void incDate();
 
-	void addCandidate(Worker w);
+	void addCandidate(s_p_Worker w);
 
-	void addJob(Job j);
+	void addJob(s_p_Job j);
 
 	int getStrategy() {
 		return strategy;

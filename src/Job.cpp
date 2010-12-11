@@ -21,9 +21,6 @@ Job::Job(int _SN, bool _skills[], int _CompanySN, int _type,
 		Poco::DateTime _inDate) {
 	SN = _SN;
 	memcpy(skills, _skills, 6);
-	//		for (int i = 0; i < 6; i++) {
-	//			skills[i] = _skills[i];
-	//		}
 	CompanySN = _CompanySN;
 	type = _type;
 	closed = false;

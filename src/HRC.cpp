@@ -51,17 +51,17 @@ void HRC::incDate() {
 	time += Poco::Timespan(1, 0, 0, 0, 0);
 }
 
-void HRC::addCandidate(Worker w) {
-	s_p_Worker workerPtr(new Worker(w));
-	workers.insert(std::make_pair(w.getID(), workerPtr));
-	seekers.push_back(workerPtr);
+void HRC::addCandidate(s_p_Worker w) {
+	//	s_p_Worker workerPtr(new Worker(w));
+	workers.insert(std::make_pair(w->getID(), w));
+	seekers.push_back(w);
 	monthly_candidates++;
 }
 
-void HRC::addJob(Job j) {
-	s_p_Job jobPtr(new Job(j));
-	jobs.insert(std::make_pair(j.SN, jobPtr));
-	openings.push_back(jobPtr);
+void HRC::addJob(s_p_Job j) {
+	//	s_p_Job jobPtr(new Job(j));
+	jobs.insert(std::make_pair(j->SN, j));
+	openings.push_back(j);
 	monthly_jobs++;
 }
 
@@ -109,7 +109,7 @@ void HRC::match() {
 
 }
 void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
-//	placedWorker->setOutDate();
+	//	placedWorker->setOutDate();
 	placedWorker->hired();
 	job->taken(time);
 	monthly_placements++;
@@ -317,7 +317,8 @@ std::string HRC::job_type_stringer(bool types[]) {
 			s = s + int2EJobType(i) + " ";
 		}
 	}
-	return s;
+	size_t next_to_last = s.length() - 1;
+	return s.substr(0, next_to_last);
 }
 
 void HRC::reportJobOpening(int SN, DT date) {
@@ -339,7 +340,16 @@ void HRC::reportCandidate(int ID, DT date) {
 	reporter.reportCandidate(ID, job_types, days, found_job, date);
 }
 
-
+void HRC::reportProfit(DT sDate, DT eDate) {
+	long profit = 0;
+	for (set<Placement, classcomp>::iterator it = placementsByDate.begin(); it
+			!= placementsByDate.end() && ((it->outDate) <= eDate); ++it) {
+		if (it->outDate >= sDate) {
+			profit += it->salary;
+		}
+	}
+	reporter.reportProfit(profit, sDate, eDate);
+}
 
 Poco::DateTime HRC::string_dater(std::string in_str) {
 	std::vector<std::string> strs;
