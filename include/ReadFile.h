@@ -16,6 +16,8 @@ class ReadFile : public Poco::Util::IniFileConfiguration
 {
 public:
 	Poco::DateTime *time;
+	CAppLogger *logger;
+
 	// Constructor that receive data stream as std::istream
 	ReadFile(std::istream& istr);
 
@@ -35,8 +37,12 @@ public:
 
 	int getJobs(std::vector<s_p_Job> *jobs);
 
-	void SetTime(Poco::DateTime *_time) {
+	void setTime(Poco::DateTime *_time) {
 		time=_time;
+	}
+
+	void setLogger(CAppLogger *_logger) {
+		logger=_logger;
 	}
 
 

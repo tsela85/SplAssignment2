@@ -122,7 +122,7 @@ int ReadFile::getWorkers(std::vector<s_p_Worker> *_workers) {
 		for (vector<string>::iterator it = parts.begin(); it != parts.end(); it++)
 			jobs[switchToInt(*it)]=true;
 		// create a worker
-		s_p_Worker worker(new Worker(ID,skills,jobs,salary,time));
+		s_p_Worker worker(new Worker(ID,skills,jobs,salary,time,logger));
 		_workers->push_back(worker);
 	}
 
