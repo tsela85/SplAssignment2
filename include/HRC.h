@@ -51,7 +51,7 @@ private:
 	std::list<s_p_Worker> seekers;
 	std::list<s_p_Job> openings;
 	long profit;
-	Poco::DateTime time;
+	Poco::DateTime *time;
 	int Company_Rep;
 	int Seeker_Rep;
 	int strategy;
@@ -70,7 +70,7 @@ public:
 
 	HRC();
 
-	HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int strategy,
+	HRC(Poco::DateTime *sDate, int _Seeker_rep, int _Company_rep, int strategy,
 			CAppLogger *logger);
 
 	void setDate(Poco::DateTime newDate);

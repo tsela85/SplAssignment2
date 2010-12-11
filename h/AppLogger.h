@@ -30,16 +30,19 @@ private:
                 ELoggersCount
         };
 
-        CAppLogger(void);
+//        CAppLogger(void);
 
 public:
+
+        CAppLogger(int LOGGER_CONSOLE_PRIORITY, int LOGGER_FILE_PRIORITY);
+
         ~CAppLogger(void);
 
         // The one and only application logger is accessible through this method
-        static CAppLogger& Instance()
+        static CAppLogger& Instance(int LOGGER_CONSOLE_PRIORITY, int LOGGER_FILE_PRIORITY)
         {
                 // This is the instance.
-                static CAppLogger instance;
+                static CAppLogger instance(LOGGER_CONSOLE_PRIORITY,LOGGER_FILE_PRIORITY);
                 static bool firstCall = true;
                 if (firstCall)
                 {

@@ -32,7 +32,7 @@ HRC::HRC() {
 	//	reporter(std::string("052978509"), std::string("37054244"));
 }
 
-HRC::HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep,
+HRC::HRC(Poco::DateTime *sDate, int _Seeker_rep, int _Company_rep,
 		int _strategy, CAppLogger *_logger) {
 	HRC();
 	time = sDate;
@@ -43,14 +43,14 @@ HRC::HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep,
 }
 
 void HRC::setDate(Poco::DateTime newDate) {
-	time = newDate;
+	*time = newDate;
 }
 
 /**
  * increment time by 1 day.
  */
 void HRC::incDate() {
-	time += Poco::Timespan(1, 0, 0, 0, 0);
+	*time += Poco::Timespan(1, 0, 0, 0, 0);
 }
 
 void HRC::addCandidate(s_p_Worker w) {
@@ -58,6 +58,9 @@ void HRC::addCandidate(s_p_Worker w) {
 	workers.insert(std::make_pair(w->getID(), w));
 	seekers.push_back(w);
 	monthly_candidates++;
+	ostringstream msg;
+	msg << "Candidate " << w->getID() << " was added to the HRC DB.";
+	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
 }
 
 void HRC::addJob(s_p_Job j) {
@@ -65,10 +68,16 @@ void HRC::addJob(s_p_Job j) {
 	jobs.insert(std::make_pair(j->SN, j));
 	openings.push_back(j);
 	monthly_jobs++;
+	ostringstream msg;
+	msg << "Job Opening " << j->SN << " was added to the HRC DB.";
+	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
 }
 
 void HRC::addCompany(s_p_Company c) {
 	companies.insert(make_pair(c->getSN(), c));
+	ostringstream msg;
+	msg << "Company " << c->SN << " was added to the HRC DB.";
+	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
 }
 
 void HRC::update_Company_Rep() {
@@ -86,6 +95,9 @@ void HRC::update_Company_Rep() {
 	new_rep = std::min(5, new_rep);
 	new_rep = std::max(1, new_rep);
 	Company_Rep = new_rep;
+	ostringstream msg;
+	msg << "Employer Reputation was update to " << new_rep << ".";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::update_Seeker_Rep() {
@@ -103,6 +115,9 @@ void HRC::update_Seeker_Rep() {
 	new_rep = std::min(5, new_rep);
 	new_rep = std::max(1, new_rep);
 	Seeker_Rep = new_rep;
+	ostringstream msg;
+	msg << "Job Seeker Reputation was update to " << new_rep << ".";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::match() {
@@ -117,16 +132,16 @@ void HRC::match() {
 void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	//	placedWorker->setOutDate();
 	placedWorker->hired();
-	job->taken(time);
+	job->taken(*time);
 	monthly_placements++;
 	seekers.remove(placedWorker);
 	openings.remove(job);
 	float salary = placedWorker->getExpectedSalary();
-	Poco::DateTime outDate = time;
+	Poco::DateTime outDate = *time;
 	int jobType = ((companies.find(job->CompanySN))->second)->type;
 	Placement p;
 	p.salary = salary;
-	p.outDate = time;
+	p.outDate = *time;
 	p.job = job;
 	p.job_type = jobType;
 	p.worker = placedWorker;
@@ -137,7 +152,11 @@ void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	}
 	placementsByJobType[jobType].insert(p);
 	placementsByDate.insert(p);
-
+	ostringstream msg;
+	msg << "Candidate " << placedWorker->getID()
+			<< " was accepted to job opening " << job->SN << " at "
+			<< ((companies.find(job->CompanySN))->second)->getName() << ".";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 /**
@@ -193,13 +212,13 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 		float num = 0;
 		for (v_p_Worker::iterator it = applicants.begin(); it
 				!= applicants.end(); ++it) {
-			tot += (time - (*it)->getInDate()).days();
+			tot += (*time - (*it)->getInDate()).days();
 			num += 1;
 		}
 		float avg = tot / num;
 		for (v_p_Worker::iterator it = applicants.begin(); it
 				!= applicants.end(); ++it) {
-			if ((time - (*it)->getInDate()).days() < avg) {
+			if ((*time - (*it)->getInDate()).days() < avg) {
 				it = applicants.erase(it);
 			}
 		}
@@ -231,9 +250,9 @@ bool HRC::screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
 		ostringstream msg;
-		msg << "Candidate " << (*it)->getID() << " was notified about job opening "
-				<< jobPtr->SN;
-		logger->Instance().Log(msg.str(), Poco::Message::PRIO_DEBUG);
+		msg << "Candidate " << (*it)->getID()
+				<< " was notified about job opening " << jobPtr->SN << ".";
+		logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 		int tmp = (*it)->getExpectedSalary();
 		float tmpQL = QL(*it, jobPtr);
 		if (tmp < curMin && tmpQL >= minQL) {
@@ -258,6 +277,10 @@ bool HRC::screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 	float curBest = 0;
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
+		ostringstream msg;
+		msg << "Candidate " << (*it)->getID()
+				<< " was notified about job opening " << jobPtr->SN << ".";
+		logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 		double tmp = QL(*it, jobPtr);
 		if (tmp > curBest && tmp >= minQL) {
 			curBest = tmp;
@@ -282,6 +305,10 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 	//			/ choosenOne->getExpectedSalary();
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
+		ostringstream msg;
+		msg << "Candidate " << (*it)->getID()
+				<< " was notified about job opening " << jobPtr->SN << ".";
+		logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 		float tmpQL = (QL(*it, jobPtr));
 		float tmp = tmpQL / (*it)->getExpectedSalary();
 		if (tmp > curBest && tmpQL >= minQL) {
@@ -297,10 +324,6 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 	}
 	return found;
 }
-
-//bool HRC::compareSalaries(s_p_Worker* w1, s_p_Worker* w2) {
-//	return ((*w1)->getExpectedSalary()) < ((*w2)->getExpectedSalary());
-//}
 
 float HRC::QL(s_p_Worker worker, s_p_Job job) {
 	int skills[6];
@@ -338,6 +361,9 @@ void HRC::reportJobOpening(int SN, DT date) {
 	bool closed = job->closed;
 	job_type = ass2::JobType(int2EJobType(job->type));
 	reporter.reportJobOpening(SN, job_type, days, closed, date);
+	ostringstream msg;
+	msg << "Job Opening report was generated.";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::reportCandidate(int ID, DT date) {
@@ -348,6 +374,9 @@ void HRC::reportCandidate(int ID, DT date) {
 	int days = worker->comp_days();
 	bool found_job = worker->isOccupied();
 	reporter.reportCandidate(ID, job_types, days, found_job, date);
+	ostringstream msg;
+	msg << "Candidate report was generated.";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::reportProfit(DT sDate, DT eDate) {
@@ -359,6 +388,9 @@ void HRC::reportProfit(DT sDate, DT eDate) {
 		}
 	}
 	reporter.reportProfit(profit, sDate, eDate);
+	ostringstream msg;
+	msg << "Profit report was generated.";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::reportSalarySurvey(JobType job_type, DT sDate, DT eDate) {
@@ -372,6 +404,9 @@ void HRC::reportSalarySurvey(JobType job_type, DT sDate, DT eDate) {
 	}
 	avg_salary = tot_salaries / n;
 	reporter.reportSalarySurvey(job_type, avg_salary, sDate, eDate);
+	ostringstream msg;
+	msg << "Salary Survey report was generated.";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate) {
@@ -385,6 +420,9 @@ void HRC::reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate) {
 	}
 	avg_salary = tot_salaries / n;
 	reporter.reportSalarySurvey(skill, avg_salary, sDate, eDate);
+	ostringstream msg;
+	msg << "Salary Survey report was generated.";
+	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 Poco::DateTime HRC::string_dater(std::string in_str) {

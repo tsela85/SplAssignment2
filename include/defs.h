@@ -10,7 +10,7 @@
 
 #include "boost/shared_ptr.hpp"
 #include "../include/Worker.h"
-#include "../include/Company.h"
+//#include "../include/Company.h"
 #include "../include/Job.h"
 
 //typedef std::auto_ptr<Worker> a_p_Worker;

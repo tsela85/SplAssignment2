@@ -4,11 +4,15 @@
  *  Created on: Dec 5, 2010
  *      Author: Tom and Aviad
  */
+
+
 #include "../include/defs.h"
 #include "Poco/DateTime.h"
+#include "../h/AppLogger.h"
+
+
 #ifndef WORKER_H_
 #define WORKER_H_
-
 class Worker {
 
 private:
@@ -22,12 +26,13 @@ private:
 	Poco::DateTime outDate;
 	long int days;
 	bool occupied;
+	CAppLogger *logger;
 
 public:
 
 	/** a new Worker contractor */
 	Worker(int ID, int skills[6], bool desiredJobTypes[6], float expectedSalary,
-			Poco::DateTime *time);
+			Poco::DateTime *time, CAppLogger *logger);
 
 	/** a Worker destructor */
 	~Worker();
