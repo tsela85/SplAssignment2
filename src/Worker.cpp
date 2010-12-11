@@ -110,6 +110,6 @@ bool Worker::isOccupied() {
 }
 
 Worker::~Worker() {
-	delete (time);
+//	delete (time);
 }
 
