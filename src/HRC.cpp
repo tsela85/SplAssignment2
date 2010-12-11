@@ -351,6 +351,32 @@ void HRC::reportProfit(DT sDate, DT eDate) {
 	reporter.reportProfit(profit, sDate, eDate);
 }
 
+void HRC::reportSalarySurvey(JobType job_type, DT sDate, DT eDate) {
+	double avg_salary = 0, tot_salaries = 0;
+	int n = 0;
+	set<Placement, classcomp> db_set = placementsByJobType[job_type.to_num()];
+	for (set<Placement, classcomp>::iterator it = db_set.begin(); it
+			!= db_set.end(); it++) {
+		tot_salaries += it->salary;
+		n++;
+	}
+	avg_salary = tot_salaries / n;
+	reporter.reportSalarySurvey(job_type, avg_salary, sDate, eDate);
+}
+
+void HRC::reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate) {
+	double avg_salary = 0, tot_salaries = 0;
+	int n = 0;
+	set<Placement, classcomp> db_set = placementsBySkillType[skill->to_num()];
+	for (set<Placement, classcomp>::iterator it = db_set.begin(); it
+			!= db_set.end(); it++) {
+		tot_salaries += it->salary;
+		n++;
+	}
+	avg_salary = tot_salaries / n;
+	reporter.reportSalarySurvey(skill, avg_salary, sDate, eDate);
+}
+
 Poco::DateTime HRC::string_dater(std::string in_str) {
 	std::vector<std::string> strs;
 	boost::split(strs, in_str, boost::is_any_of("\\"));

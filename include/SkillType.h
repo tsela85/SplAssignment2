@@ -64,6 +64,20 @@ namespace ass2{
 			}
 		}
 
+		int to_num() const
+				{
+					switch (m_skillType){
+						case CPP :				return 0;
+						case JAVA :				return 1;
+						case SCRIPT :	    	return 2;
+						case WEB :			    return 3;
+						case SYSTEM :		    return 4;
+						case QA :			    return 5;
+						default:				return 666;
+						//last line is just to make the compiler happy.
+					}
+				}
+
 	private:
 		ESkillType m_skillType;
 	};

@@ -1,4 +1,3 @@
-
 // main.cpp
 
 #include <iostream>
@@ -11,33 +10,30 @@ using namespace std;
 #include "../h/EventsConfiguration.h"
 #include "../h/AppLogger.h"
 
-int main(int argc, char** argv)
-{
-	string s = "/";
-	string s2 = "\/";
-	string s3 = "\\";
-	cout << s << "\n" << s2 << "\n" << s3 << endl;
-        if (argc < 2)
-        {
-                cout << "Usage: " << argv[0] << "<configuration file name>" << endl;
-                return 1;
-        }
+int main(int argc, char** argv) {
 
-        // Load configuration (events' descriptions)
-        CEventsConfiguration eventsConfFile(argv[1]);
-        Poco::DateTime now;
+	if (argc < 2) {
+		cout << "Usage: " << argv[0] << "<configuration file name>" << endl;
+		return 1;
+	}
 
-        // Loop on all events and output days differences
-        for (int i = 0; i < eventsConfFile.GetMyEventsCount(); i++)
-        {
-                CEventsConfiguration::MyEvent currEvent = eventsConfFile[i];
-                std::ostringstream strStream;
+	// Load configuration (events' descriptions)
+	CEventsConfiguration eventsConfFile(argv[1]);
+	Poco::DateTime now;
 
-                strStream << currEvent.mDescription << " was at " << Poco::DateTimeFormatter::format(currEvent.mDateOfOccurence.timestamp(), "%d/%n/%y");
-                strStream << " and " << (now - currEvent.mDateOfOccurence).days() << " days has passed since than!";
+	// Loop on all events and output days differences
+	for (unsigned int i = 0; i < eventsConfFile.GetMyEventsCount(); i++) {
+		CEventsConfiguration::MyEvent currEvent = eventsConfFile[i];
+		std::ostringstream strStream;
 
-                CAppLogger::Instance().Log(strStream, Poco::Message::PRIO_NOTICE);
-        }
+		strStream << currEvent.mDescription << " was at "
+				<< Poco::DateTimeFormatter::format(
+						currEvent.mDateOfOccurence.timestamp(), "%d/%n/%y");
+		strStream << " and " << (now - currEvent.mDateOfOccurence).days()
+				<< " days has passed since than!";
 
-        return 0;
+		CAppLogger::Instance().Log(strStream, Poco::Message::PRIO_NOTICE);
+	}
+
+	return 0;
 }
