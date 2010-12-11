@@ -210,10 +210,12 @@ int ReadFile::getCommands(std::vector<Command> *commands){
 		sType << "COMMAND" << i << ".Type";
 		CommandType type = convertCommand(getString(sType.str()));
 		switch (type) {
-			case (candidateReport):
+			case CANDIDATEREPORT:
+			{
 				// Date
-				streamDate << "COMMAND" << i << ".Date";
-				string dateStr =getString(streamDate.str());
+				ostringstream sDate;
+				sDate << "COMMAND" << i << ".Date";
+				string dateStr =getString(sDate.str());
 				int timeZoneDiff;
 				DateTime date;
 				DateTimeParser::tryParse("%d/%n/%Y", dateStr, date, timeZoneDiff);
@@ -221,8 +223,19 @@ int ReadFile::getCommands(std::vector<Command> *commands){
 				ostringstream sID;
 				sID << "COMMAND" << i << ".ID";
 				int ID = boost::lexical_cast<int>(getString(sID.str()));
-				Command command(type,date,ID);
+				Command::Command command(type,date,ID);
 				break;
+			}
+			case JOBOPENINGREPORT:				break;
+
+			case SALARYSURVEYREPORTBYJOB:					break;
+
+			case SALARYSURVEYREPORTBYSKILL:				break;
+
+			case PROFITREPORT:				break;
+
+			case TERMINATE:				break;
+
 			default:
 				break;
 		}
