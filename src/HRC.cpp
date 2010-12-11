@@ -34,7 +34,18 @@ HRC::HRC() {
 
 HRC::HRC(Poco::DateTime *sDate, int _Seeker_rep, int _Company_rep,
 		int _strategy, CAppLogger *_logger) {
-	HRC();
+	//	HRC();
+	for (int i = 0; i < 6; ++i) {
+		placementsByJobType.push_back(set<Placement, classcomp> ());
+		placementsBySkillType.push_back(set<Placement, classcomp> ());
+	}
+	profit = 0;
+	monthly_candidates = 0;
+	monthly_jobs = 0;
+	monthly_placements = 0;
+	Aviad = "052978509";
+	Tom = "37054244";
+	reporter = HRCReport(Aviad, Tom);
 	time = sDate;
 	Seeker_Rep = _Seeker_rep;
 	Company_Rep = _Company_rep;

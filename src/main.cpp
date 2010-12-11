@@ -24,8 +24,8 @@ int main(int argc, char** argv) {
 	int INIT_SEEKER_REP = 3;
 	int INIT_COMPANY_REP = 1;
 	int HRC_STRATEGY = 0;
-	int LOGGER_CONSOLE_PRIORITY = 3;
-	int LOGGER_FILE_PRIORITY = 4;
+	int LOGGER_CONSOLE_PRIORITY = 8;
+	int LOGGER_FILE_PRIORITY = 8;
 
 	CAppLogger logger(LOGGER_CONSOLE_PRIORITY, LOGGER_FILE_PRIORITY);
 //	CAppLogger *logger_ptr = &logger;
