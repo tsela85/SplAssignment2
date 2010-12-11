@@ -19,6 +19,7 @@
 #include "../include/Company.h"
 #include "../include/JobType.h"
 #include "../include/SkillType.h"
+#include "../include/Command.h"
 //#include "../include/Placement.h"
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"

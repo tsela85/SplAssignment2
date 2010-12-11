@@ -193,13 +193,32 @@ int ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 
 		// create a job
 
-		s_p_Job job(new Job(ID,skills,SN,time));
+		s_p_Job job(new Job(ID,skills,SN,*time));
 		_jobs->push_back(job);
 	}
 
 	return amount;
-
 }
+
+int ReadFile::getCommands(std::vector<Command> *commands){
+	ostringstream sAmount;
+	sAmount << "numberOfJOBS";
+	int amount = getInt(sAmount.str());
+
+	for (int i=1; i <= amount; i++) {
+		// Type
+		ostringstream sType;
+		sType << "JOB" << i << ".Type";
+		CommandType type = convertCommand(getString(sType.str()));
+
+
+//		s_p_Job job(new Job(ID,skills,SN,*time));
+//		_jobs->push_back(job);
+	}
+
+	return amount;
+}
+
 
 
 int switchToInt(string temp) {

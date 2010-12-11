@@ -37,6 +37,9 @@ public:
 
 	int getJobs(std::vector<s_p_Job> *jobs);
 
+	int getCommands(std::vector<Command> *commands);
+
+
 	void setTime(Poco::DateTime *_time) {
 		time=_time;
 	}
