@@ -76,6 +76,7 @@ void HRC::addCandidate(s_p_Worker w) {
 
 void HRC::addJob(s_p_Job j) {
 	//	s_p_Job jobPtr(new Job(j));
+	j->setInDate(time);
 	int type((companies.find(j->CompanySN))->second->getType());
 	j->setType(type);
 	jobs.insert(std::make_pair(j->SN, j));

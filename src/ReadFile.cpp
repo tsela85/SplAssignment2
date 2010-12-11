@@ -192,7 +192,7 @@ int ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 
 		// create a job
 
-		s_p_Job job(new Job(ID,skills,SN,*time));
+		s_p_Job job(new Job(ID,skills,SN));
 		_jobs->push_back(job);
 	}
 
