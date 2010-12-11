@@ -83,7 +83,7 @@ void ReadFile::getConfig(Poco::DateTime *_date, int *_jobNum, int *_workNum,int 
 	*_logFileP = getInt(streamLogFileP.str());
 }
 
-int ReadFile::getWorkers(std::vector<s_p_Worker> *_workers) {
+void ReadFile::getWorkers(std::vector<s_p_Worker> *_workers,Poco::DateTime *_time,CAppLogger *_logger) {
 	ostringstream sAmount;
 	sAmount << "numberOfCANDIDATES";
 	int amount = getInt(sAmount.str());
@@ -121,14 +121,12 @@ int ReadFile::getWorkers(std::vector<s_p_Worker> *_workers) {
 		for (vector<string>::iterator it = parts.begin(); it != parts.end(); it++)
 			jobs[switchToInt(*it)]=true;
 		// create a worker
-		s_p_Worker worker(new Worker(ID,skills,jobs,salary,time,logger));
+		s_p_Worker worker(new Worker(ID,skills,jobs,salary,_time,_logger));
 		_workers->push_back(worker);
 	}
-
-	return amount;
 }
 
-int ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
+void ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
 	ostringstream sAmount;
 	sAmount << "numberOfCompanies";
 	int amount = getInt(sAmount.str());
@@ -158,11 +156,9 @@ int ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
 		s_p_Company company(new Company(name,type,SN,recPolicy,ql));
 		_companies->push_back(company);
 	}
-
-	return amount;
 }
 
-int ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
+void ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 	ostringstream sAmount;
 	sAmount << "numberOfJOBS";
 	int amount = getInt(sAmount.str());
@@ -192,14 +188,12 @@ int ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 
 		// create a job
 
-		s_p_Job job(new Job(ID,skills,SN,*time));
+		s_p_Job job(new Job(ID,skills,SN));
 		_jobs->push_back(job);
 	}
-
-	return amount;
 }
 
-int ReadFile::getCommands(std::vector<Command> *commands){
+void ReadFile::getCommands(std::vector<Command> *commands){
 	ostringstream sAmount;
 	sAmount << "numberOfJOBS";
 	int amount = getInt(sAmount.str());
@@ -224,27 +218,110 @@ int ReadFile::getCommands(std::vector<Command> *commands){
 				sID << "COMMAND" << i << ".ID";
 				int ID = boost::lexical_cast<int>(getString(sID.str()));
 				Command::Command command(type,date,ID);
+				commands->push_back(command);
 				break;
 			}
-			case JOBOPENINGREPORT:				break;
-
-			case SALARYSURVEYREPORTBYJOB:					break;
-
-			case SALARYSURVEYREPORTBYSKILL:				break;
-
-			case PROFITREPORT:				break;
-
-			case TERMINATE:				break;
-
-			default:
+			case JOBOPENINGREPORT:
+			{
+				// Date
+				ostringstream sDate;
+				sDate << "COMMAND" << i << ".Date";
+				string dateStr =getString(sDate.str());
+				int timeZoneDiff;
+				DateTime date;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, date, timeZoneDiff);
+				// SN
+				ostringstream sSN;
+				sSN << "COMMAND" << i << ".SN";
+				int SN = boost::lexical_cast<int>(getString(sSN.str()));
+				// create Command
+				Command::Command command(type,date,SN);
+				commands->push_back(command);
 				break;
+			}
+			case SALARYSURVEYREPORTBYJOB:
+			{
+				// Start Date
+				ostringstream sDate;
+				sDate << "COMMAND" << i << ".StartDate";
+				string dateStr =getString(sDate.str());
+				int timeZoneDiff;
+				DateTime startDate;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, startDate, timeZoneDiff);
+				// End Date
+				ostringstream sEndDate;
+				sEndDate << "COMMAND" << i << ".EndDate";
+				dateStr =getString(sEndDate.str());
+				DateTime endDate;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, endDate, timeZoneDiff);
+				//  Job Type
+				ostringstream sType;
+				sType << "COMMAND" << i << ".JobType";
+				int jobType = switchToInt(getString(sType.str()));
+				// create Command
+				Command::Command command(type,jobType,startDate,endDate);
+				commands->push_back(command);
+				break;
+			}
+			case SALARYSURVEYREPORTBYSKILL:
+			{
+				// Start Date
+				ostringstream sDate;
+				sDate << "COMMAND" << i << ".StartDate";
+				string dateStr =getString(sDate.str());
+				int timeZoneDiff;
+				DateTime startDate;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, startDate, timeZoneDiff);
+				// End Date
+				ostringstream sEndDate;
+				sEndDate << "COMMAND" << i << ".EndDate";
+				dateStr =getString(sEndDate.str());
+				DateTime endDate;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, endDate, timeZoneDiff);
+				//  Job Type
+				ostringstream sSkill;
+				sSkill << "COMMAND" << i << ".Skill";
+				int skill = switchToInt(getString(sSkill.str()));
+				// create Command
+				Command::Command command(type,skill,startDate,endDate);
+				commands->push_back(command);
+				break;
+			}
+			case PROFITREPORT:{
+				// Start Date
+				ostringstream sDate;
+				sDate << "COMMAND" << i << ".StartDate";
+				string dateStr =getString(sDate.str());
+				int timeZoneDiff;
+				DateTime startDate;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, startDate, timeZoneDiff);
+				// End Date
+				ostringstream sEndDate;
+				sEndDate << "COMMAND" << i << ".EndDate";
+				dateStr =getString(sEndDate.str());
+				DateTime endDate;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, endDate, timeZoneDiff);
+				// create Command
+				Command::Command command(type,startDate,endDate);
+				commands->push_back(command);
+				break;
+			}
+			case TERMINATE:	{
+				// Date
+				ostringstream sDate;
+				sDate << "COMMAND" << i << ".Date";
+				string dateStr =getString(sDate.str());
+				int timeZoneDiff;
+				DateTime date;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, date, timeZoneDiff);
+				// create Command
+				Command::Command command(type,date);
+				commands->push_back(command);
+				break;
+			}
+			default: break;
 		}
-
-//		s_p_Job job(new Job(ID,skills,SN,*time));
-//		_jobs->push_back(job);
 	}
-
-	return amount;
 }
 
 
