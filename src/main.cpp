@@ -32,9 +32,8 @@ int main(int argc, char** argv) {
 
 	HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
 	vector<s_p_Company> companies;
-
-	//	cofFile.getCompanies(&companies); FIXME: uncomment
-
+	cofFile.getCompanies(&companies);
+	ReadFile cofFile(argv[1]);
 	vector<s_p_Worker> workers;
 	cofFile.getWorkers(&workers);
 
@@ -91,40 +90,51 @@ int main(int argc, char** argv) {
 	//	s_p_Worker worker(new Worker(234, skills, desired, 192.3456, &INITIAL_DATE,
 	//			&logger));
 	//	hrc.addCandidate(worker);
-	logger.Log("testing", Poco::Message::PRIO_FATAL);
+	=======
+	for (vector<s_p_Worker>::iterator it = workers.begin();
+			it != workers.end();
+			it++)
+			hrc.addCandidate(*it);
 
-	//	hrc.
-	//	CAppLogger::Instance().Log("testing", Poco::Message::PRIO_CRITICAL);
-	/*//	Poco::
-	 Poco::Channel chnl = Poco::LoggingFactory::defaultFactory().createChannel("ConsoleChannel");
-	 //	Poco::Logger console_logger = Poco::Logger::create("testLogger",
-	 //			"Log.Console",
-	 //			Poco::LoggingFactory::defaultFactory().createChannel(
-	 //					"ConsoleChannel"), Poco::Message::PRIO_NOTICE);*/
+			for (vector<s_p_Worker>::iterator it = workers.begin(); it
+					!= workers.end(); it++)
+				hrc.reportCandidate((*it)->getID(), INITIAL_DATE);
 
-	/*if (argc < 2) {
-	 cout << "Usage: " << argv[0] << "<configuration file name>" << endl;
-	 return 1;
-	 }
+			>>>>>>> work
+			logger.Log("testing", Poco::Message::PRIO_FATAL);
 
-	 // Load configuration (events' descriptions)
-	 CEventsConfiguration eventsConfFile(argv[1]);
-	 Poco::DateTime now;
+			//	hrc.
+			//	CAppLogger::Instance().Log("testing", Poco::Message::PRIO_CRITICAL);
+			/*//	Poco::
+			 Poco::Channel chnl = Poco::LoggingFactory::defaultFactory().createChannel("ConsoleChannel");
+			 //	Poco::Logger console_logger = Poco::Logger::create("testLogger",
+			 //			"Log.Console",
+			 //			Poco::LoggingFactory::defaultFactory().createChannel(
+			 //					"ConsoleChannel"), Poco::Message::PRIO_NOTICE);*/
 
-	 // Loop on all events and output days differences
-	 for (unsigned int i = 0; i < eventsConfFile.GetMyEventsCount(); i++) {
-	 CEventsConfiguration::MyEvent currEvent = eventsConfFile[i];
-	 std::ostringstream strStream;
+			/*if (argc < 2) {
+			 cout << "Usage: " << argv[0] << "<configuration file name>" << endl;
+			 return 1;
+			 }
 
-	 strStream << currEvent.mDescription << " was at "
-	 << Poco::DateTimeFormatter::format(
-	 currEvent.mDateOfOccurence.timestamp(), "%d/%n/%y");
-	 strStream << " and " << (now - currEvent.mDateOfOccurence).days()
-	 << " days has passed since than!";
-	 */
-	//		CAppLogger::Instance().Log(strStream, Poco::Message::PRIO_NOTICE);
-	//	}
+			 // Load configuration (events' descriptions)
+			 CEventsConfiguration eventsConfFile(argv[1]);
+			 Poco::DateTime now;
 
-	return 0;
-}
+			 // Loop on all events and output days differences
+			 for (unsigned int i = 0; i < eventsConfFile.GetMyEventsCount(); i++) {
+			 CEventsConfiguration::MyEvent currEvent = eventsConfFile[i];
+			 std::ostringstream strStream;
+
+			 strStream << currEvent.mDescription << " was at "
+			 << Poco::DateTimeFormatter::format(
+			 currEvent.mDateOfOccurence.timestamp(), "%d/%n/%y");
+			 strStream << " and " << (now - currEvent.mDateOfOccurence).days()
+			 << " days has passed since than!";
+			 */
+			//		CAppLogger::Instance().Log(strStream, Poco::Message::PRIO_NOTICE);
+			//	}
+
+			return 0;
+		}
 
