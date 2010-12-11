@@ -42,8 +42,7 @@ void ReadFile::getConfig(Poco::DateTime *_date, int *_jobNum, int *_workNum,int 
 
 	// Get  INITIAL_DATE
 	streamDate << "GENERAL.INITIAL_DATE";
-	string dateStr =
-			getString(streamDate.str());
+	string dateStr =getString(streamDate.str());
 	int timeZoneDiff;
 	DateTime date;
 	DateTimeParser::tryParse("%d/%n/%Y", dateStr, date, timeZoneDiff);
@@ -208,9 +207,25 @@ int ReadFile::getCommands(std::vector<Command> *commands){
 	for (int i=1; i <= amount; i++) {
 		// Type
 		ostringstream sType;
-		sType << "JOB" << i << ".Type";
+		sType << "COMMAND" << i << ".Type";
 		CommandType type = convertCommand(getString(sType.str()));
-
+		switch (type) {
+			case (candidateReport):
+				// Date
+				streamDate << "COMMAND" << i << ".Date";
+				string dateStr =getString(streamDate.str());
+				int timeZoneDiff;
+				DateTime date;
+				DateTimeParser::tryParse("%d/%n/%Y", dateStr, date, timeZoneDiff);
+				// ID
+				ostringstream sID;
+				sID << "COMMAND" << i << ".ID";
+				int ID = boost::lexical_cast<int>(getString(sID.str()));
+				Command command(type,date,ID);
+				break;
+			default:
+				break;
+		}
 
 //		s_p_Job job(new Job(ID,skills,SN,*time));
 //		_jobs->push_back(job);
