@@ -43,6 +43,13 @@ struct classcomp {//to order the set by Poco::DateTime
 	}
 };
 
+/*struct comp_date_sn_jobs {
+	bool operator()(s_p_Job j1, s_p_Job j2) const {
+		if (j1->inDate < j2->inDate) return true;
+		else if (j1->inDate == j2->inDate) return j1->
+	}
+};*/
+
 class HRC {
 private:
 	std::map<int, s_p_Worker> workers;

@@ -21,11 +21,13 @@ public:
 	Poco::DateTime outDate;
 	long int days;
 
-	Job(int SN, bool skills[], int CompanySN, int type, Poco::DateTime inDate);
+	Job(int SN, bool skills[], int CompanySN, Poco::DateTime inDate);
 
 	Job(const Job &job);
 
 	void taken(Poco::DateTime now);
+
+	void setType(int type);
 
 	long int comp_days(Poco::DateTime now);
 };

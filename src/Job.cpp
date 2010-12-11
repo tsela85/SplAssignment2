@@ -17,12 +17,10 @@
  Poco::DateTime outDate;
  long int days;*/
 
-Job::Job(int _SN, bool _skills[], int _CompanySN, int _type,
-		Poco::DateTime _inDate) {
+Job::Job(int _SN, bool _skills[], int _CompanySN, Poco::DateTime _inDate) {
 	SN = _SN;
 	memcpy(skills, _skills, 6);
 	CompanySN = _CompanySN;
-	type = _type;
 	closed = false;
 	inDate = _inDate;
 	days = 0;
@@ -36,6 +34,10 @@ Job::Job(const Job &src_job) {
 	closed = src_job.closed;
 	inDate = src_job.inDate;
 	days = src_job.days;
+}
+
+void Job::setType(int _type) {
+	type = _type;
 }
 
 void Job::taken(Poco::DateTime now) {
