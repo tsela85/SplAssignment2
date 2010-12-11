@@ -178,15 +178,13 @@ int ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 		ostringstream sSkillNum;
 		sSkillNum << "JOB" << i << ".numberOfSkills";
 		int skillNum = getInt(sSkillNum.str());
-		int skills[6];
-		for(int k=0;k < 6;k++) skills[k]=0;
+		bool skills[6];
+		for(int k=0;k < 6;k++) skills[k]=false;
 		for(int j=1; j <= skillNum;j++) {
 			ostringstream sSkill;
 			sSkill << "JOB" << i << ".Skill" << j;
 			string skill= getString(sSkill.str());
-			vector<string> parts;
-			boost::algorithm::split(parts,skill,boost::is_any_of(" "));
-			skills[switchToInt(parts[0])]=boost::lexical_cast<int>(parts[1]);
+			skills[switchToInt(skill)]=true;
 		}
 		// CompanySN
 		ostringstream sSN;
