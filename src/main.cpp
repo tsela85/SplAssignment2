@@ -15,24 +15,23 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-  ReadFile cofFile(argv[1]);
-    cout << argv[1]<< endl;
-    Poco::DateTime date;
-    int jobNum;
-    int workNum;
-    int seekerRep;
-    int companyRep;
-    int HrcStrat;
-    int logConP;
-    int logFileP;
-    cofFile.getConfig(&date,&jobNum,&workNum,&seekerRep,&companyRep,&HrcStrat,&logConP,&logFileP);
-    cout << jobNum << endl;
-    cout <<workNum<< endl;
-    cout <<seekerRep<< endl;
-    cout <<companyRep<< endl;
-    cout <<HrcStrat<< endl;
-    cout <<logConP<< endl;
-    cout <<logFileP<< endl;
+//    cout << argv[1]<< endl;
+//    Poco::DateTime date;
+//    int jobNum;
+//    int workNum;
+//    int seekerRep;
+//    int companyRep;
+//    int HrcStrat;
+//    int logConP;
+//    int logFileP;
+//    cofFile.getConfig(&date,&jobNum,&workNum,&seekerRep,&companyRep,&HrcStrat,&logConP,&logFileP);
+//    cout << jobNum << endl;
+//    cout <<workNum<< endl;
+//    cout <<seekerRep<< endl;
+//    cout <<companyRep<< endl;
+//    cout <<HrcStrat<< endl;
+//    cout <<logConP<< endl;
+//    cout <<logFileP<< endl;
 
 	Poco::DateTime INITIAL_DATE(1999, 12, 31);
 	int INIT_JOBS_NUM = 3;
@@ -49,8 +48,19 @@ int main(int argc, char** argv) {
 //	s_p_Worker worker;
 	int skills[6] = {2,3,4,4,0,0};
 	bool desired[6] = {true, true, false, false, false,false};
-	s_p_Worker worker(new Worker(234, skills, desired, 192.3456, &INITIAL_DATE, &logger));
-	hrc.addCandidate(worker);
+	//s_p_Worker worker(new Worker(234, skills, desired, 192.3456, &INITIAL_DATE, &logger));
+	//hrc.addCandidate(worker);
+
+	ReadFile cofFile(argv[1]);
+	vector<s_p_Worker> workers;
+	cofFile.getWorkers(&workers);
+
+	for (vector<s_p_Worker>::iterator it = workers.begin(); it != workers.end(); it++)
+		hrc.addCandidate(*it);
+
+	for (vector<s_p_Worker>::iterator it = workers.begin(); it != workers.end(); it++)
+			hrc.reportCandidate((*it)->getID(),INITIAL_DATE);
+
 	logger.Log("testing", Poco::Message::PRIO_FATAL);
 
 //	hrc.

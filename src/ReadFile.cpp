@@ -129,7 +129,83 @@ int ReadFile::getWorkers(std::vector<s_p_Worker> *_workers) {
 	return amount;
 }
 
+int ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
+	ostringstream sAmount;
+	sAmount << "numberOfCompanies";
+	int amount = getInt(sAmount.str());
+	for (int i=1; i <= amount; i++) {
+		// ID
+		ostringstream sSN;
+		sSN << "COMPANY" << i << ".SN";
+		int SN = boost::lexical_cast<int>(getString(sSN.str()));
+		// Name
+		ostringstream sName;
+		sName << "COMPANY" << i << ".Name";
+		string name = getString(sName.str());
+		// CompanyType
+		ostringstream sType;
+		sType << "COMPANY" << i << ".CompanyType";
+		int type = switchToInt(getString(sType.str()));
+		// RecruitingPolicy
+		ostringstream sRecPolicy;
+		sRecPolicy << "COMPANY" << i << ".RecruitingPolicy";
+		int recPolicy = switchToInt(getString(sRecPolicy.str()));
+		// QL_Min
+		ostringstream sQl;
+		sQl << "COMPANY" << i << ".QL_Min ";
+		float ql = getDouble(sQl.str());
+
+		// create a company
+		s_p_Company company(new Company(name,type,SN,recPolicy,ql));
+		_companies->push_back(company);
+	}
+
+	return amount;
+}
+
+int ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
+	ostringstream sAmount;
+	sAmount << "numberOfJOBS";
+	int amount = getInt(sAmount.str());
+
+	for (int i=1; i <= amount; i++) {
+		// ID
+		ostringstream sID;
+		sID << "JOB" << i << ".ID";
+		int ID = boost::lexical_cast<int>(getString(sID.str()));
+
+		// Skills
+		ostringstream sSkillNum;
+		sSkillNum << "JOB" << i << ".numberOfSkills";
+		int skillNum = getInt(sSkillNum.str());
+		int skills[6];
+		for(int k=0;k < 6;k++) skills[k]=0;
+		for(int j=1; j <= skillNum;j++) {
+			ostringstream sSkill;
+			sSkill << "JOB" << i << ".Skill" << j;
+			string skill= getString(sSkill.str());
+			vector<string> parts;
+			boost::algorithm::split(parts,skill,boost::is_any_of(" "));
+			skills[switchToInt(parts[0])]=boost::lexical_cast<int>(parts[1]);
+		}
+		// CompanySN
+		ostringstream sSN;
+		sSN << "JOB" << i << ".CompanySN";
+		int SN = boost::lexical_cast<int>(getString(sSN.str()));
+
+		// create a job
+
+		s_p_Job job(new Job(ID,skills,SN,time));
+		_jobs->push_back(job);
+	}
+
+	return amount;
+
+}
+
+
 int switchToInt(string temp) {
+	// temp=stl::tolower(temp); TODO: switch to lower case
 	if (temp == "cpp") return _CPP;
 	if (temp == "java") return _JAVA;
 	if (temp == "script") return _SCRIPT;
@@ -143,6 +219,11 @@ int switchToInt(string temp) {
 	if (temp == "gaming") return _GAMING;
 	if (temp == "rt") return _RT;
 	if (temp == "security") return _SECURITY;
+
+	if (temp == "Cheap") return CHEAP;
+	if (temp == "Lavish") return LAVISH;
+	if (temp == "Cost_Effective") return COST_EFFECTIVE;
+
 	return -1; // TODO: throw error
 }
 
