@@ -32,12 +32,14 @@ HRC::HRC() {
 	//	reporter(std::string("052978509"), std::string("37054244"));
 }
 
-HRC::HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int _strategy) {
+HRC::HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep,
+		int _strategy, CAppLogger *_logger) {
 	HRC();
 	time = sDate;
 	Seeker_Rep = _Seeker_rep;
 	Company_Rep = _Company_rep;
 	strategy = _strategy;
+	logger = _logger;
 }
 
 void HRC::setDate(Poco::DateTime newDate) {
@@ -63,6 +65,10 @@ void HRC::addJob(s_p_Job j) {
 	jobs.insert(std::make_pair(j->SN, j));
 	openings.push_back(j);
 	monthly_jobs++;
+}
+
+void HRC::addCompany(s_p_Company c) {
+	companies.insert(make_pair(c->getSN(), c));
 }
 
 void HRC::update_Company_Rep() {
@@ -224,6 +230,10 @@ bool HRC::screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 	int curMin = std::numeric_limits<int>::max();
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
+		ostringstream msg;
+		msg << "Candidate " << (*it)->getID() << " was notified about job opening "
+				<< jobPtr->SN;
+		logger->Instance().Log(msg.str(), Poco::Message::PRIO_DEBUG);
 		int tmp = (*it)->getExpectedSalary();
 		float tmpQL = QL(*it, jobPtr);
 		if (tmp < curMin && tmpQL >= minQL) {

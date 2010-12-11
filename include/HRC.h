@@ -23,6 +23,7 @@
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"
 #include "../include/HRCReport.h"
+#include "../h/AppLogger.h"
 
 typedef boost::shared_ptr<Company> s_p_Company;
 typedef Poco::DateTime DT;
@@ -37,11 +38,10 @@ struct Placement {
 };
 
 struct classcomp {//to order the set by Poco::DateTime
-  bool operator() (Placement lhs, Placement rhs) const
-  {return lhs.worker->getOutDate() < rhs.worker->getOutDate();}
+	bool operator()(Placement lhs, Placement rhs) const {
+		return lhs.worker->getOutDate() < rhs.worker->getOutDate();
+	}
 };
-
-
 
 class HRC {
 private:
@@ -64,12 +64,14 @@ private:
 	std::string Aviad;
 	std::string Tom;
 	HRCReport reporter;
+	CAppLogger *logger;
 
 public:
 
 	HRC();
 
-	HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int strategy);
+	HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int strategy,
+			CAppLogger *logger);
 
 	void setDate(Poco::DateTime newDate);
 
@@ -78,6 +80,8 @@ public:
 	void addCandidate(s_p_Worker w);
 
 	void addJob(s_p_Job j);
+
+	void addCompany(s_p_Company c);
 
 	int getStrategy() {
 		return strategy;
@@ -145,19 +149,17 @@ public:
 
 	void reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate);
 
-	void reportSalarySurvey(const ass2::SkillType* skill, string sDate, string eDate) {
+	void reportSalarySurvey(const ass2::SkillType* skill, string sDate,
+			string eDate) {
 		reportSalarySurvey(skill, string_dater(sDate), string_dater(eDate));
 	}
 
 	void reportProfit(DT sDate, DT eDate);
 
-	void reportProfit(string sDate, string eDate){
+	void reportProfit(string sDate, string eDate) {
 		reportProfit(string_dater(sDate), string_dater(eDate));
 	}
 
-
 };
-
-
 
 #endif /* HRC_H_ */
