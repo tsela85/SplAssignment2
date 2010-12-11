@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 		file = argv[3];
 		ReadFile cofFile3(file);
 		vector<s_p_Worker> workers;
-		cofFile3.getWorkers(&workers);
+		cofFile3.getWorkers(&workers, &date, &logger);
 
 		file = argv[4];
 		ReadFile cofFile4(file);
