@@ -13,10 +13,6 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-	string s = "/";
-	string s2 = "\/";
-	string s3 = "\\";
-	cout << s << "\n" << s2 << "\n" << s3 << endl;
         if (argc < 2)
         {
                 cout << "Usage: " << argv[0] << "<configuration file name>" << endl;

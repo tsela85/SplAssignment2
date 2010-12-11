@@ -23,7 +23,7 @@ public:
 
 	Job(int SN, bool skills[], int CompanySN, int type, Poco::DateTime inDate);
 
-	Job(const Job &job);
+//	Job(const Job &job);
 
 	void taken(Poco::DateTime now);
 
