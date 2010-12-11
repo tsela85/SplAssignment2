@@ -61,6 +61,22 @@ bool Worker::compromise() {
 	}
 }
 
+long int Worker::comp_days() {
+	if (occupied)
+		return days;
+	else //compute the no. of days in HRC database only if the worker has not been occupied yet.
+		return (*time - inDate).days();
+}
+
+void Worker::hired() {
+	setOutDate();
+	days = comp_days();
+	occupied = true;
+}
+
+bool Worker::isOccupied() {
+	return occupied;
+}
 
 Worker::~Worker() {
 	delete (time);

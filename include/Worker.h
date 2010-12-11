@@ -20,6 +20,7 @@ private:
 	Poco::DateTime *time;
 	Poco::DateTime inDate;
 	Poco::DateTime outDate;
+	long int days;
 	bool occupied;
 
 public:
@@ -61,5 +62,13 @@ public:
 	/** updates the workers expectedSalary according to the date he joined */
 	bool compromise();
 
+	/** this worker is hired. Hurray! */
+	void hired();
+
+	/** compute the number of days the worker spent in the HRC database */
+	long int comp_days();
+
+	/** has this worker found a job yet? */
+	bool isOccupied();
 };
 #endif /* WORKER_H_ */

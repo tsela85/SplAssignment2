@@ -26,6 +26,10 @@ HRC::HRC() {
 	monthly_candidates = 0;
 	monthly_jobs = 0;
 	monthly_placements = 0;
+	Aviad = "052978509";
+	Tom = "37054244";
+	reporter = HRCReport(Aviad, Tom);
+	//	reporter(std::string("052978509"), std::string("37054244"));
 }
 
 HRC::HRC(Poco::DateTime sDate, int _Seeker_rep, int _Company_rep, int _strategy) {
@@ -105,7 +109,9 @@ void HRC::match() {
 
 }
 void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
-	placedWorker->setOutDate();
+//	placedWorker->setOutDate();
+	placedWorker->hired();
+	job->taken(time);
 	monthly_placements++;
 	seekers.remove(placedWorker);
 	openings.remove(job);
@@ -219,7 +225,7 @@ bool HRC::screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
 		int tmp = (*it)->getExpectedSalary();
-		float tmpQL = QL(*it, *jobPtr);
+		float tmpQL = QL(*it, jobPtr);
 		if (tmp < curMin && tmpQL >= minQL) {
 			curMin = tmp;
 			choosenOne = *it;
@@ -242,7 +248,7 @@ bool HRC::screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 	float curBest = 0;
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
-		double tmp = QL(*it, *jobPtr);
+		double tmp = QL(*it, jobPtr);
 		if (tmp > curBest && tmp >= minQL) {
 			curBest = tmp;
 			choosenOne = *it;
@@ -266,7 +272,7 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 	//			/ choosenOne->getExpectedSalary();
 	for (vector<s_p_Worker>::iterator it = applicants.begin(); it
 			!= applicants.end(); ++it) {
-		float tmpQL = (QL(*it, *jobPtr));
+		float tmpQL = (QL(*it, jobPtr));
 		float tmp = tmpQL / (*it)->getExpectedSalary();
 		if (tmp > curBest && tmpQL >= minQL) {
 			curBest = tmp;
@@ -286,13 +292,13 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 //	return ((*w1)->getExpectedSalary()) < ((*w2)->getExpectedSalary());
 //}
 
-float HRC::QL(s_p_Worker worker, Job job) {
+float HRC::QL(s_p_Worker worker, s_p_Job job) {
 	int skills[6];
 	worker->getSkills(skills);
 	float tot(0);
 	float num(0);
 	for (int j = 0; j < 6; ++j) {
-		if (job.skills[j]) {
+		if (job->skills[j]) {
 			tot += skills[j];
 			num++;
 		}
@@ -313,6 +319,27 @@ std::string HRC::job_type_stringer(bool types[]) {
 	}
 	return s;
 }
+
+void HRC::reportJobOpening(int SN, DT date) {
+	s_p_Job job = (jobs.find(SN))->second;
+	ass2::JobType job_type;
+	long int days = job->comp_days(date);
+	bool closed = job->closed;
+	job_type = ass2::JobType(int2EJobType(job->type));
+	reporter.reportJobOpening(SN, job_type, days, closed, date);
+}
+
+void HRC::reportCandidate(int ID, DT date) {
+	s_p_Worker worker = workers.find(ID)->second;
+	bool types[6];
+	worker->getDesiredJobTypes(types);
+	string job_types = job_type_stringer(types);
+	int days = worker->comp_days();
+	bool found_job = worker->isOccupied();
+	reporter.reportCandidate(ID, job_types, days, found_job, date);
+}
+
+
 
 Poco::DateTime HRC::string_dater(std::string in_str) {
 	std::vector<std::string> strs;

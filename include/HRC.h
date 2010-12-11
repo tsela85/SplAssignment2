@@ -11,17 +11,21 @@
 #include <map>
 #include <set>
 #include <vector>
-#include <memory>
+//#include <memory>
 #include "Poco/DateTime.h"
 #include "Poco/Timespan.h"
 #include "../include/Worker.h"
 #include "../include/Job.h"
 #include "../include/Company.h"
+#include "../include/JobType.h"
+#include "../include/SkillType.h"
 //#include "../include/Placement.h"
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"
+#include "../include/HRCReport.h"
 
 typedef boost::shared_ptr<Company> s_p_Company;
+typedef Poco::DateTime DT;
 
 struct Placement {
 	s_p_Job job;
@@ -57,6 +61,9 @@ private:
 	int monthly_candidates;
 	int monthly_jobs;
 	int monthly_placements;
+	std::string Aviad;
+	std::string Tom;
+	HRCReport reporter;
 
 public:
 
@@ -108,7 +115,7 @@ public:
 
 	bool compareSalaries(s_p_Worker* w1, s_p_Worker* w2);
 
-	float QL(s_p_Worker worker, Job job);
+	float QL(s_p_Worker worker, s_p_Job job);
 
 	std::string job_type_stringer(bool types[]);
 
@@ -117,6 +124,38 @@ public:
 	std::string int2EJobType(int type);
 
 	std::string int2ESkillType(int type);
+
+	void reportCandidate(int ID, Poco::DateTime date);
+
+	void reportCandidate(int ID, string date) {
+		reportCandidate(ID, string_dater(date));
+	}
+
+	void reportJobOpening(int SN, DT date);
+
+	void reportJobOpening(int SN, string date) {
+		reportJobOpening(SN, string_dater(date));
+	}
+
+	void reportSalarySurvey(ass2::JobType job_type, DT sDate, DT eDate);
+
+	void reportSalarySurvey(ass2::JobType job_type, string sDate, string eDate) {
+		reportSalarySurvey(job_type, string_dater(sDate), string_dater(eDate));
+	}
+
+	void reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate);
+
+	void reportSalarySurvey(const ass2::SkillType* skill, string sDate, string eDate) {
+		reportSalarySurvey(skill, string_dater(sDate), string_dater(eDate));
+	}
+
+	void reportProfit(DT sDate, DT eDate);
+
+	void reportProfit(string sDate, string eDate){
+		reportProfit(string_dater(sDate), string_dater(eDate));
+	}
+
+
 };
 
 
