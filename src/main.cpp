@@ -19,6 +19,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
     ReadFile cofFile(argv[1]);
+    cout << argv[1]<< endl;
     Poco::DateTime date;
     int jobNum;
     int workNum;
@@ -28,6 +29,12 @@ int main(int argc, char** argv)
     int logConP;
     int logFileP;
     cofFile.getConfig(&date,&jobNum,&workNum,&seekerRep,&companyRep,&HrcStrat,&logConP,&logFileP);
-
+    cout << jobNum << endl;
+    cout <<workNum<< endl;
+    cout <<seekerRep<< endl;
+    cout <<companyRep<< endl;
+    cout <<HrcStrat<< endl;
+    cout <<logConP<< endl;
+    cout <<logFileP<< endl;
 }
 
