@@ -203,7 +203,8 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 	for (int j = 0; j < 6; ++j) {
 		desired.push_back(job.skills[j]);
 	}
-	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it != seekers.end(); ++it) {
+	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it
+			!= seekers.end(); ++it) {
 		Worker worker = **it; //a list of pointers (s_p_Worker)
 		int skills[6];
 		worker.getSkills(skills);
@@ -341,7 +342,8 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 
 void HRC::compromise() {
 	bool go_on = true;
-	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it != seekers.end() && go_on; it++) {
+	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it
+			!= seekers.end() && go_on; it++) {
 		go_on = (*it)->compromise();
 	}
 }
@@ -490,5 +492,11 @@ std::string HRC::int2ESkillType(int skill) {
 	default:
 		return "";
 	}
+}
+
+bool HRC::is_last_day() {
+	DT today = *time;
+	DT tomorrow = *time + Poco::Timespan(1, 0, 0, 0, 0);
+	return tomorrow.month() != today.month();
 }
 

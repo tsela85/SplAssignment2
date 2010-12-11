@@ -33,13 +33,13 @@ int main(int argc, char** argv) {
 	HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
 	vector<s_p_Company> companies;
 
-//	cofFile.getCompanies(&companies); FIXME: uncomment
+	//	cofFile.getCompanies(&companies); FIXME: uncomment
 
 	vector<s_p_Worker> workers;
 	cofFile.getWorkers(&workers);
 
 	vector<s_p_Job> jobs;
-//	cofFile.getJobs(&jobs); FIXME: uncomment
+	//	cofFile.getJobs(&jobs); FIXME: uncomment
 
 	for (vector<s_p_Company>::iterator it = companies.begin(); it
 			!= companies.end(); it++) {
@@ -68,7 +68,12 @@ int main(int argc, char** argv) {
 			hrc.addJob(*job_iterator);
 			job_iterator++;
 		}
-
+		hrc.match();
+		// TODO: execute commands
+		if (hrc.is_last_day()) {
+			hrc.update_Seeker_Rep();
+			hrc.update_Company_Rep();
+		}
 	}
 	/*Poco::DateTime INITIAL_DATE(1999, 12, 31);
 	 int INIT_JOBS_NUM = 3;

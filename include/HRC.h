@@ -187,6 +187,8 @@ public:
 
 	void compromise();
 
+	bool is_last_day();
+
 };
 
 #endif /* HRC_H_ */
