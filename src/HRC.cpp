@@ -90,7 +90,8 @@ void HRC::addJob(s_p_Job j) {
 void HRC::addCompany(s_p_Company c) {
 	companies.insert(make_pair(c->getSN(), c));
 	ostringstream msg;
-	msg << "Company " << c->SN << " was added to the HRC DB.";
+	int temp=c->getSN();
+	msg << "Company " << temp << " was added to the HRC DB.";
 	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
 }
 

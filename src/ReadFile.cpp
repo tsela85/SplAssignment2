@@ -154,12 +154,13 @@ void ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
 		int recPolicy = switchToInt(getString(sRecPolicy.str()));
 		// QL_Min
 		ostringstream sQl;
-		sQl << "COMPANY" << i << ".QL_Min ";
+		sQl << "COMPANY" << i << ".QL_Min";
 		float ql = getDouble(sQl.str());
 
 		// create a company
 		s_p_Company company(new Company(name, type, SN, recPolicy, ql));
 		_companies->push_back(company);
+
 	}
 }
 
@@ -201,7 +202,7 @@ void ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 
 void ReadFile::getCommands(std::vector<Command> *commands) {
 	ostringstream sAmount;
-	sAmount << "numberOfJOBS";
+	sAmount << "numberOfCommands";
 	int amount = getInt(sAmount.str());
 
 	for (int i = 1; i <= amount; i++) {
@@ -261,7 +262,7 @@ void ReadFile::getCommands(std::vector<Command> *commands) {
 			//  Job Type
 			ostringstream sType;
 			sType << "COMMAND" << i << ".JobType";
-			int jobType = switchToInt(getString(sType.str()));
+			string jobType = getString(sType.str());
 			// create Command
 			Command::Command command(type, jobType, startDate, endDate);
 			commands->push_back(command);
@@ -285,7 +286,7 @@ void ReadFile::getCommands(std::vector<Command> *commands) {
 			//  Job Type
 			ostringstream sSkill;
 			sSkill << "COMMAND" << i << ".Skill";
-			int skill = switchToInt(getString(sSkill.str()));
+			string skill = getString(sSkill.str());
 			// create Command
 			Command::Command command(type, skill, startDate, endDate);
 			commands->push_back(command);

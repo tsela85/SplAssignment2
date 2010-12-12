@@ -15,9 +15,10 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	string file = argv[1];
+	string ofile = argv[1];
 	try {
-		ReadFile cofFile(file);
+		string *file = &ofile;
+		ReadFile cofFile(*file);
 
 		//	cout << argv[1] << endl;
 		Poco::DateTime date;
@@ -29,29 +30,29 @@ int main(int argc, char** argv) {
 		int logConP;
 		int logFileP;
 		cofFile.getConfig(&date, &jobNum, &workNum, &seekerRep, &companyRep,
-				&HrcStrat, &logConP, &logFileP);
+				&HrcStrat, &logConP, &logFileP); //TODO: add try/catch block for exceptions to be logged.
 
 		CAppLogger logger(logConP, logFileP);
 
 		HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
 
-		file = argv[2];
-		ReadFile cofFile2(file);
+		*file = argv[2];
+		ReadFile cofFile2(*file);
 		vector<s_p_Company> companies;
 		cofFile2.getCompanies(&companies);
 
-		file = argv[3];
-		ReadFile cofFile3(file);
+		*file = argv[3];
+		ReadFile cofFile3(*file);
 		vector<s_p_Worker> workers;
 		cofFile3.getWorkers(&workers, &date, &logger);
 
-		file = argv[4];
-		ReadFile cofFile4(file);
+		*file = argv[4];
+		ReadFile cofFile4(*file);
 		vector<s_p_Job> jobs;
 		cofFile4.getJobs(&jobs);
 
-		file = argv[5];
-		ReadFile cofFile5(file);
+		*file = argv[5];
+		ReadFile cofFile5(*file);
 		vector<Command> commands;
 		cofFile5.getCommands(&commands);
 
@@ -70,6 +71,8 @@ int main(int argc, char** argv) {
 			job_iterator++;
 		}
 		int new_workers(0), new_jobs(0);
+
+		commands[0].executeCommand(&hrc);
 
 		bool terminate = false;
 		while (!terminate) {
@@ -99,19 +102,19 @@ int main(int argc, char** argv) {
 	} catch (Poco::FileNotFoundException) {
 		CAppLogger logger(8, 8);
 		ostringstream msg;
-		msg << "Error: " << file << " file not found.";
+		msg << "Error: " << ofile << " file not found.";
 		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
 		return 1;
 	} catch (Poco::NotFoundException) {
 		CAppLogger logger(8, 8);
 		ostringstream msg;
-		msg << "Error reading " << file << " file.";
+		msg << "Error reading " << ofile << " file.";
 		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
 		return 1;
 	} catch (...) { //any other exception
 		CAppLogger logger(8, 8);
 		ostringstream msg;
-		msg << "Error " << file.substr(0, file.find("."))
+		msg << "Error " << ofile.substr(0, ofile.find("."))
 				/*just the name of the file*/<< " data is not consistent.";
 		logger.Log(msg, Poco::Message::PRIO_ERROR);
 		return 1;
