@@ -12,6 +12,7 @@
 
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeParser.h"
+#include "../include/HRC.h"
 
 using namespace std;
 
@@ -26,27 +27,28 @@ enum CommandType
 };
 CommandType convertCommand(string command);
 
+class HRC; //TODO: check if we can remove it
+
 class Command {
 
 public:
-
 
 
 	CommandType type;
 	Poco::DateTime date;
 	Poco::DateTime endDate;
 	int ID;
-	int kind;
+	string kind;
 
 	Command(CommandType type,Poco::DateTime date,int ID);
 
-	Command(CommandType type,int kind,Poco::DateTime date,Poco::DateTime endDate);
+	Command(CommandType type,string kind,Poco::DateTime date,Poco::DateTime endDate);
 
 	Command(CommandType type,Poco::DateTime date,Poco::DateTime endDate);
 
 	Command(CommandType type,Poco::DateTime date);
 
-	void executeCommand();
+	void executeCommand(HRC *hrc);
 
 };
 
