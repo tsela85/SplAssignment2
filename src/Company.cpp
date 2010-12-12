@@ -22,13 +22,13 @@
 /**
  * ctor
  */
-Company::Company(string name, int type, int SN, int recruitingPolicy,
-		float QL_Min) {
-	name = name;
-	type = type;
-	SN = SN;
-	recruitingPolicy = recruitingPolicy;
-	QL_Min = QL_Min;
+Company::Company(string _name, int _type, int _SN, int _recruitingPolicy,
+		float _QL_Min) {
+	name = _name;
+	type = _type;
+	SN = _SN;
+	recruitingPolicy = _recruitingPolicy;
+	QL_Min = _QL_Min;
 	jobOpenings = vector<Job> ();
 }
 

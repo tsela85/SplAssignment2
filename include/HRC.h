@@ -44,20 +44,30 @@ struct classcomp {//to order the set by Poco::DateTime
 	}
 };
 
-/*struct comp_date_sn_jobs {
+struct comp_date_sn_jobs {
 	bool operator()(s_p_Job j1, s_p_Job j2) const {
-		if (j1->inDate < j2->inDate) return true;
-		else if (j1->inDate == j2->inDate) return j1->
+		if (j1->inDate < j2->inDate)
+			return true;
+		else if (j1->inDate == j2->inDate)
+			return (j1->SN) < (j2->SN);
+		else
+			return false;
 	}
-};*/
+};
+
+struct comp_date_worker {//to order the set by Poco::DateTime
+	bool operator()(s_p_Worker lhs, s_p_Worker rhs) const {
+		return lhs->getInDate() < rhs->getInDate();
+	}
+};
 
 class HRC {
 private:
 	std::map<int, s_p_Worker> workers;
 	std::map<int, s_p_Job> jobs;
 	std::map<int, s_p_Company> companies;
-	std::list<s_p_Worker> seekers;
-	std::list<s_p_Job> openings;
+	set<s_p_Worker, comp_date_worker> seekers;
+	set<s_p_Job, comp_date_sn_jobs> openings;
 	long profit;
 	Poco::DateTime *time;
 	int Company_Rep;
@@ -167,6 +177,18 @@ public:
 	void reportProfit(string sDate, string eDate) {
 		reportProfit(string_dater(sDate), string_dater(eDate));
 	}
+
+	int get_seeker_rep() {
+		return Seeker_Rep;
+	}
+
+	int get_company_rep() {
+		return Company_Rep;
+	}
+
+	void compromise();
+
+	bool is_last_day();
 
 };
 

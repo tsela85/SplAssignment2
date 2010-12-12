@@ -67,7 +67,7 @@ void HRC::incDate() {
 void HRC::addCandidate(s_p_Worker w) {
 	//	s_p_Worker workerPtr(new Worker(w));
 	workers.insert(std::make_pair(w->getID(), w));
-	seekers.push_back(w);
+	seekers.insert(w);
 	monthly_candidates++;
 	ostringstream msg;
 	msg << "Candidate " << w->getID() << " was added to the HRC DB.";
@@ -76,10 +76,11 @@ void HRC::addCandidate(s_p_Worker w) {
 
 void HRC::addJob(s_p_Job j) {
 	//	s_p_Job jobPtr(new Job(j));
+	j->setInDate(time);
 	int type((companies.find(j->CompanySN))->second->getType());
 	j->setType(type);
 	jobs.insert(std::make_pair(j->SN, j));
-	openings.push_back(j);
+	openings.insert(j);
 	monthly_jobs++;
 	ostringstream msg;
 	msg << "Job Opening " << j->SN << " was added to the HRC DB.";
@@ -89,7 +90,8 @@ void HRC::addJob(s_p_Job j) {
 void HRC::addCompany(s_p_Company c) {
 	companies.insert(make_pair(c->getSN(), c));
 	ostringstream msg;
-	msg << "Company " << c->SN << " was added to the HRC DB.";
+	int temp=c->getSN();
+	msg << "Company " << temp << " was added to the HRC DB.";
 	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
 }
 
@@ -135,7 +137,8 @@ void HRC::update_Seeker_Rep() {
 
 void HRC::match() {
 	s_p_Worker placedWorker;
-	for (list<s_p_Job>::iterator it = openings.begin(); it != openings.end(); ++it) {
+	for (set<s_p_Job, comp_date_sn_jobs>::iterator it = openings.begin(); it
+			!= openings.end(); ++it) {
 		if (matchForJob(*it, placedWorker)) {
 			candidate_placement(placedWorker, *it);
 		}
@@ -147,8 +150,8 @@ void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	placedWorker->hired();
 	job->taken(*time);
 	monthly_placements++;
-	seekers.remove(placedWorker);
-	openings.remove(job);
+	seekers.erase(placedWorker);
+	openings.erase(job);
 	float salary = placedWorker->getExpectedSalary();
 	Poco::DateTime outDate = *time;
 	int jobType = ((companies.find(job->CompanySN))->second)->type;
@@ -202,7 +205,8 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 	for (int j = 0; j < 6; ++j) {
 		desired.push_back(job.skills[j]);
 	}
-	for (list<s_p_Worker>::iterator it = seekers.begin(); it != seekers.end(); ++it) {
+	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it
+			!= seekers.end(); ++it) {
 		Worker worker = **it; //a list of pointers (s_p_Worker)
 		int skills[6];
 		worker.getSkills(skills);
@@ -336,6 +340,14 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 		}
 	}
 	return found;
+}
+
+void HRC::compromise() {
+	bool go_on = true;
+	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it
+			!= seekers.end() && go_on; it++) {
+		go_on = (*it)->compromise();
+	}
 }
 
 float HRC::QL(s_p_Worker worker, s_p_Job job) {
@@ -482,5 +494,11 @@ std::string HRC::int2ESkillType(int skill) {
 	default:
 		return "";
 	}
+}
+
+bool HRC::is_last_day() {
+	DT today = *time;
+	DT tomorrow = *time + Poco::Timespan(1, 0, 0, 0, 0);
+	return tomorrow.month() != today.month();
 }
 
