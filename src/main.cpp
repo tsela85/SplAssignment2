@@ -29,13 +29,12 @@ int main(int argc, char** argv) {
 		int logConP;
 		int logFileP;
 		cofFile.getConfig(&date, &jobNum, &workNum, &seekerRep, &companyRep,
-				&HrcStrat, &logConP, &logFileP); //TODO: add try/catch block for exceptions to be logged.
+				&HrcStrat, &logConP, &logFileP);
 
 		CAppLogger logger(logConP, logFileP);
 
 		HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
 
-		cout << "here \n";
 		file = argv[2];
 		ReadFile cofFile2(file);
 		vector<s_p_Company> companies;
