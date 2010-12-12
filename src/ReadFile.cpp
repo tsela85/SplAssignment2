@@ -149,12 +149,13 @@ void ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
 		int recPolicy = switchToInt(getString(sRecPolicy.str()));
 		// QL_Min
 		ostringstream sQl;
-		sQl << "COMPANY" << i << ".QL_Min ";
+		sQl << "COMPANY" << i << ".QL_Min";
 		float ql = getDouble(sQl.str());
 
 		// create a company
 		s_p_Company company(new Company(name,type,SN,recPolicy,ql));
 		_companies->push_back(company);
+
 	}
 }
 
@@ -195,7 +196,7 @@ void ReadFile::getJobs(std::vector<s_p_Job> *_jobs) {
 
 void ReadFile::getCommands(std::vector<Command> *commands){
 	ostringstream sAmount;
-	sAmount << "numberOfJOBS";
+	sAmount << "numberOfCommands";
 	int amount = getInt(sAmount.str());
 
 	for (int i=1; i <= amount; i++) {
