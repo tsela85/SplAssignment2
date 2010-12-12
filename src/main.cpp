@@ -35,7 +35,6 @@ int main(int argc, char** argv) {
 
 		HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
 
-		cout << "here \n";
 		file = argv[2];
 		ReadFile cofFile2(file);
 		vector<s_p_Company> companies;
