@@ -57,20 +57,13 @@ Command::Command(CommandType _type,Poco::DateTime _date) {
 
 void Command::executeCommand() {
 	switch (type) {
-		case CANDIDATEREPORT:
-			break;
-		case JOBOPENINGREPORT:
-					break;
-		case SALARYSURVEYREPORTBYJOB:
-					break;
-		case SALARYSURVEYREPORTBYSKILL:
-					break;
-		case PROFITREPORT:
-					break;
-		case TERMINATE:
-					break;
-		default:
-			break;
+		case CANDIDATEREPORT: break;
+		case JOBOPENINGREPORT: break;
+		case SALARYSURVEYREPORTBYJOB: break;
+		case SALARYSURVEYREPORTBYSKILL: break;
+		case PROFITREPORT: break;
+		case TERMINATE: break;
+		default: break;
 	}
 }
 
