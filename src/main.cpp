@@ -15,8 +15,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-
-		string file = argv[1];
+	string file = argv[1];
 	try {
 		ReadFile cofFile(file);
 
@@ -36,6 +35,7 @@ int main(int argc, char** argv) {
 
 		HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
 
+		cout << "here \n";
 		file = argv[2];
 		ReadFile cofFile2(file);
 		vector<s_p_Company> companies;
@@ -100,8 +100,21 @@ int main(int argc, char** argv) {
 	} catch (Poco::FileNotFoundException) {
 		CAppLogger logger(8, 8);
 		ostringstream msg;
-		msg << "Error: "<<  file << " file not found.";
+		msg << "Error: " << file << " file not found.";
 		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
+		return 1;
+	} catch (Poco::NotFoundException) {
+		CAppLogger logger(8, 8);
+		ostringstream msg;
+		msg << "Error reading " << file << " file.";
+		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
+		return 1;
+	} catch (...) { //any other exception
+		CAppLogger logger(8, 8);
+		ostringstream msg;
+		msg << "Error " << file.substr(0, file.find("."))
+				/*just the name of the file*/<< " data is not consistent.";
+		logger.Log(msg, Poco::Message::PRIO_ERROR);
 		return 1;
 	}
 }
