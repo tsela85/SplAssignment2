@@ -10,28 +10,23 @@ CommandType convertCommand(string command) {
 	CommandType temp;
 	if (command == "candidateReport") {
 		temp = CANDIDATEREPORT;
-		return temp;
 	} else
 	if (command == "jobOpeningReport") {
 		temp=JOBOPENINGREPORT;
-		return temp;
 	} else
 	if (command == "salarySurveyReportByJob") {
 		temp=SALARYSURVEYREPORTBYJOB;
-		return temp;
 	} else
 	if (command == "salarySurveyReportBySkill") {
 		temp=SALARYSURVEYREPORTBYSKILL;
-		return temp;
 	} else
 	if (command == "profitReport") {
 		temp=PROFITREPORT;
-		return temp;
 	} else
 	if (command == "terminate") {
 		temp=TERMINATE;
-		return temp;
 	}
+	return temp;
 	// TODO:	throw exeception ("somthing bad")
 }
 
@@ -63,9 +58,22 @@ void Command::executeCommand(HRC *hrc) {
 		case SALARYSURVEYREPORTBYJOB: hrc->reportSalarySurvey(kind,date, endDate); break;
 		case SALARYSURVEYREPORTBYSKILL:hrc->reportSalarySurvey(kind, date,endDate); break;
 		case PROFITREPORT: hrc->reportProfit(date,endDate); break;
-		case TERMINATE: break;
+		case TERMINATE: hrc->terminateProgram(); break;
 		default: break;
 	}
+}
+
+Poco::DateTime Command::getDate() {
+	switch (type) {
+		case CANDIDATEREPORT: return date;
+		case JOBOPENINGREPORT:return date;
+		case SALARYSURVEYREPORTBYJOB: return endDate;
+		case SALARYSURVEYREPORTBYSKILL: return endDate;
+		case PROFITREPORT: return endDate;
+		case TERMINATE: return date;
+		default: break;
+	}
+	return date;
 }
 
 

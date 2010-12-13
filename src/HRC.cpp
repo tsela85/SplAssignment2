@@ -29,6 +29,7 @@ HRC::HRC() {
 	Aviad = "052978509";
 	Tom = "37054244";
 	reporter = HRCReport(Aviad, Tom);
+	terminate=false;
 	//	reporter(std::string("052978509"), std::string("37054244"));
 }
 
@@ -51,6 +52,7 @@ HRC::HRC(Poco::DateTime *sDate, int _Seeker_rep, int _Company_rep,
 	Company_Rep = _Company_rep;
 	strategy = _strategy;
 	logger = _logger;
+	terminate=false;
 }
 
 void HRC::setDate(Poco::DateTime newDate) {

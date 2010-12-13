@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 		cofFile5.getCommands(&commands);
 
 		for (vector<s_p_Company>::iterator it = companies.begin(); it
-				!= companies.end(); it++) {
+		!= companies.end(); it++) {
 			hrc.addCompany(*it);
 		}
 		vector<s_p_Worker>::iterator worker_iterator = workers.begin();
@@ -72,10 +72,10 @@ int main(int argc, char** argv) {
 		}
 		int new_workers(0), new_jobs(0);
 
-	//	commands[0].executeCommand(&hrc);
+		//	commands[0].executeCommand(&hrc);
 
-		bool terminate = false;
-		while (!terminate) {
+		//bool terminate = false;
+		while (!hrc.getTerminate()) {
 			hrc.incDate();
 			hrc.compromise();
 			new_workers = hrc.get_seeker_rep();
@@ -89,11 +89,20 @@ int main(int argc, char** argv) {
 				job_iterator++;
 			}
 			hrc.match();
-			// TODO: execute commands
+			// TODO: sort commands by date
+			for (vector<Command>::iterator it = commands.begin(); it != commands.end(); it++) {
+				if (date == it->getDate())
+					it->executeCommand(&hrc);
+				if (hrc.getTerminate()) break;
+			}
+			//TODO: make terminate end well
+			if (hrc.getTerminate()) break;
+
 			if (hrc.is_last_day()) {
 				hrc.update_Seeker_Rep();
 				hrc.update_Company_Rep();
 			}
+
 		}
 
 		logger.Log("testing", Poco::Message::PRIO_FATAL);
@@ -115,7 +124,7 @@ int main(int argc, char** argv) {
 		CAppLogger logger(8, 8);
 		ostringstream msg;
 		msg << "Error " << ofile.substr(0, ofile.find("."))
-				/*just the name of the file*/<< " data is not consistent.";
+						/*just the name of the file*/<< " data is not consistent.";
 		logger.Log(msg, Poco::Message::PRIO_ERROR);
 		return 1;
 	}

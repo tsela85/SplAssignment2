@@ -83,7 +83,7 @@ private:
 	std::string Tom;
 	HRCReport reporter;
 	CAppLogger *logger;
-
+	bool terminate;
 public:
 
 	HRC();
@@ -184,6 +184,14 @@ public:
 
 	int get_company_rep() {
 		return Company_Rep;
+	}
+
+	bool getTerminate() {
+		return terminate;
+	}
+
+	void terminateProgram() {
+		terminate=true;
 	}
 
 	void compromise();

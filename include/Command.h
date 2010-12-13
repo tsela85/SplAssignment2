@@ -50,6 +50,7 @@ public:
 
 	void executeCommand(HRC *hrc);
 
+	Poco::DateTime getDate();
 };
 
 
