@@ -415,7 +415,12 @@ std::string HRC::job_type_stringer(bool types[]) {
 }
 
 void HRC::reportJobOpening(int SN, DT date) {
-	s_p_Job job = (jobs.find(SN))->second;
+	map<int, s_p_Job>::iterator jobs_iter = jobs.find(SN);//->second;
+	if (jobs_iter == jobs.end()) {
+		std::cout << "no job with SN " << SN << endl;
+		return;
+	}
+	s_p_Job job = jobs_iter->second;
 	ass2::JobType job_type;
 	long int days = job->comp_days(date);
 	bool closed = job->closed;
