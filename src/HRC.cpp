@@ -145,7 +145,7 @@ void HRC::match() {
 	s_p_Worker placedWorker;
 	int DEBUG = openings.size();
 	for (set<s_p_Job, comp_date_sn_jobs>::iterator it = openings.begin(); it
-			!= openings.end(); ++it) {
+			!= openings.end(); it++) {
 		if (matchForJob(*it, &placedWorker)) {
 			candidate_placement(placedWorker, *it);
 		}
@@ -442,17 +442,17 @@ void HRC::reportSalarySurvey(JobType job_type, DT sDate, DT eDate) {
 	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
-void HRC::reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate) {
+void HRC::reportSalarySurvey(SkillType skill, DT sDate, DT eDate) {
 	double avg_salary = 0, tot_salaries = 0;
 	int n = 0;
-	set<Placement, classcomp> db_set = placementsBySkillType[skill->to_num()];
+	set<Placement, classcomp> db_set = placementsBySkillType[skill.to_num()];
 	for (set<Placement, classcomp>::iterator it = db_set.begin(); it
 			!= db_set.end(); it++) {
 		tot_salaries += it->salary;
 		n++;
 	}
 	avg_salary = tot_salaries / n;
-	reporter.reportSalarySurvey(skill, avg_salary, sDate, eDate);
+	reporter.reportSalarySurvey(&skill, avg_salary, sDate, eDate);
 	ostringstream msg;
 	msg << "Salary Survey report was generated.";
 	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
@@ -510,3 +510,9 @@ bool HRC::is_last_day() {
 	return tomorrow.month() != today.month();
 }
 
+void HRC::ourReport() {
+	ostringstream msg;
+	msg << "Total number of Candidates in the DB: " << seekers.size() << endl
+			<< "Total number of Job openings in the DB: " << openings.size();
+	logger->Log(msg.str(), Poco::Message::PRIO_TRACE);
+}

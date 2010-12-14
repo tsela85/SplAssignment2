@@ -88,7 +88,8 @@ int main(int argc, char** argv) {
 				hrc.addJob(*job_iterator);
 				job_iterator++;
 			}
-//			hrc.match();
+			hrc.ourReport();
+			hrc.match();
 			// TODO: sort commands by date
 			for (vector<Command>::iterator it = commands.begin(); it != commands.end(); it++) {
 				if (date == it->getDate())

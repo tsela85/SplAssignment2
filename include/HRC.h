@@ -165,9 +165,9 @@ public:
 		reportSalarySurvey(job_type, string_dater(sDate), string_dater(eDate));
 	}
 
-	void reportSalarySurvey(const ass2::SkillType* skill, DT sDate, DT eDate);
+	void reportSalarySurvey(SkillType skill, DT sDate, DT eDate);
 
-	void reportSalarySurvey(const ass2::SkillType* skill, string sDate,
+	void reportSalarySurvey(SkillType skill, string sDate,
 			string eDate) {
 		reportSalarySurvey(skill, string_dater(sDate), string_dater(eDate));
 	}
@@ -198,6 +198,7 @@ public:
 
 	bool is_last_day();
 
+	void ourReport();
 };
 
 #endif /* HRC_H_ */

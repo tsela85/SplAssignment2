@@ -55,8 +55,8 @@ void Command::executeCommand(HRC *hrc) {
 	switch (type) {
 		case CANDIDATEREPORT: hrc->reportCandidate(ID,date); break;
 		case JOBOPENINGREPORT: hrc->reportJobOpening(ID,date); break;
-		case SALARYSURVEYREPORTBYJOB: hrc->reportSalarySurvey(kind,date, endDate); break;
-		case SALARYSURVEYREPORTBYSKILL:hrc->reportSalarySurvey(kind, date,endDate); break;
+		case SALARYSURVEYREPORTBYJOB: hrc->reportSalarySurvey(JobType(kind),date, endDate); break;
+		case SALARYSURVEYREPORTBYSKILL:hrc->reportSalarySurvey(SkillType(kind), date,endDate); break;
 		case PROFITREPORT: hrc->reportProfit(date,endDate); break;
 		case TERMINATE: hrc->terminateProgram(); break;
 		default: break;
