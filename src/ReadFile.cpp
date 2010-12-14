@@ -74,7 +74,6 @@ void ReadFile::getConfig(Poco::DateTime *_date, int *_jobNum, int *_workNum,
 		*_HrcStrat = EAGER;
 	else if (stratString == "FAIR")
 		*_HrcStrat = FAIR;
-	//   else TODO: throw exception error reading
 
 	// Get LOGGER_CONSOLE_PRIORITY
 	streamLogConp << "GENERAL.LOGGER_CONSOLE_PRIORITY";
@@ -364,7 +363,6 @@ int switchToInt(string temp) {
 		return LAVISH;
 	if (temp == "Cost_Effective")
 		return COST_EFFECTIVE;
-
-	return -1; // TODO: throw error
+	return -1;
 }
 
