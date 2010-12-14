@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 				hrc.addJob(*job_iterator);
 				job_iterator++;
 			}
-			hrc.match();
+//			hrc.match();
 			// TODO: sort commands by date
 			for (vector<Command>::iterator it = commands.begin(); it != commands.end(); it++) {
 				if (date == it->getDate())
@@ -105,7 +105,7 @@ int main(int argc, char** argv) {
 
 		}
 
-		logger.Log("testing", Poco::Message::PRIO_FATAL);
+		logger.Log("terminated", Poco::Message::PRIO_FATAL); // FIXME: change priority
 
 		return 0;
 	} catch (Poco::FileNotFoundException) {

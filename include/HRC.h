@@ -115,7 +115,7 @@ public:
 
 	void match();
 
-	bool matchForJob(s_p_Job jobPtr, s_p_Worker workerPtr);
+	bool matchForJob(s_p_Job jobPtr, s_p_Worker *workerPtr);
 
 	void candidate_placement(s_p_Worker placedWorker, s_p_Job job);
 
@@ -124,16 +124,16 @@ public:
 	vector<s_p_Worker> getApplicants(s_p_Job jobPtr);
 
 	bool screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants,
-			s_p_Worker choosenOne);
+			s_p_Worker *choosenOne);
 
 	bool screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
-			s_p_Worker choosenOne);
+			s_p_Worker *choosenOne);
 
 	bool screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
-			s_p_Worker choosenOne);
+			s_p_Worker *choosenOne);
 
 	bool screenApplicantsCostEffective(s_p_Job jobPtr,
-			vector<s_p_Worker> applicants, s_p_Worker choosenOne);
+			vector<s_p_Worker> applicants, s_p_Worker *choosenOne);
 
 	bool compareSalaries(s_p_Worker* w1, s_p_Worker* w2);
 

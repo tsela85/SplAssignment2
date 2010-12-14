@@ -29,7 +29,7 @@ HRC::HRC() {
 	Aviad = "052978509";
 	Tom = "37054244";
 	reporter = HRCReport(Aviad, Tom);
-	terminate=false;
+	terminate = false;
 	//	reporter(std::string("052978509"), std::string("37054244"));
 }
 
@@ -52,7 +52,7 @@ HRC::HRC(Poco::DateTime *sDate, int _Seeker_rep, int _Company_rep,
 	Company_Rep = _Company_rep;
 	strategy = _strategy;
 	logger = _logger;
-	terminate=false;
+	terminate = false;
 }
 
 void HRC::setDate(Poco::DateTime newDate) {
@@ -64,6 +64,10 @@ void HRC::setDate(Poco::DateTime newDate) {
  */
 void HRC::incDate() {
 	*time += Poco::Timespan(1, 0, 0, 0, 0);
+	ostringstream msg;
+	msg << "date was changed to " << time->day() << "/" << time->month() << "/"
+			<< time->year() << endl;
+	logger->Log(msg.str(), Poco::Message::PRIO_TRACE);
 }
 
 void HRC::addCandidate(s_p_Worker w) {
@@ -92,7 +96,7 @@ void HRC::addJob(s_p_Job j) {
 void HRC::addCompany(s_p_Company c) {
 	companies.insert(make_pair(c->getSN(), c));
 	ostringstream msg;
-	int temp=c->getSN();
+	int temp = c->getSN();
 	msg << "Company " << temp << " was added to the HRC DB.";
 	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
 }
@@ -113,7 +117,7 @@ void HRC::update_Company_Rep() {
 	new_rep = std::max(1, new_rep);
 	Company_Rep = new_rep;
 	ostringstream msg;
-	msg << "Employer Reputation was update to " << new_rep << ".";
+	msg << "Employer Reputation was updated to " << new_rep << ".";
 	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
@@ -133,15 +137,16 @@ void HRC::update_Seeker_Rep() {
 	new_rep = std::max(1, new_rep);
 	Seeker_Rep = new_rep;
 	ostringstream msg;
-	msg << "Job Seeker Reputation was update to " << new_rep << ".";
+	msg << "Job Seeker Reputation was updated to " << new_rep << ".";
 	logger->Log(msg.str(), Poco::Message::PRIO_NOTICE);
 }
 
 void HRC::match() {
 	s_p_Worker placedWorker;
+	int DEBUG = openings.size();
 	for (set<s_p_Job, comp_date_sn_jobs>::iterator it = openings.begin(); it
 			!= openings.end(); ++it) {
-		if (matchForJob(*it, placedWorker)) {
+		if (matchForJob(*it, &placedWorker)) {
 			candidate_placement(placedWorker, *it);
 		}
 	}
@@ -188,9 +193,10 @@ void HRC::copySkills(vector<bool> into, int size, Worker w) {
 ////	}
 //}
 
-bool HRC::matchForJob(s_p_Job jobPtr, s_p_Worker choosenOne) {
+bool HRC::matchForJob(s_p_Job jobPtr, s_p_Worker *choosenOne) {
 	vector<s_p_Worker> applicants;
 	applicants = getApplicants(jobPtr);
+	int DEBUG = applicants.size();
 	if (applicants.size() > 0 && screenApplicants(jobPtr, applicants,
 			choosenOne)) {
 		return true;
@@ -246,7 +252,7 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 }
 
 bool HRC::screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants,
-		s_p_Worker choosenOne) {
+		s_p_Worker *choosenOne) {
 	// get company and company strategy
 	int companySN = jobPtr->CompanySN;
 	s_p_Company companyPtr = companies.find(companySN)->second;
@@ -261,7 +267,7 @@ bool HRC::screenApplicants(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 }
 
 bool HRC::screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
-		s_p_Worker choosenOne) {
+		s_p_Worker *choosenOne) {
 	bool found = false;
 	float minQL = ((companies.find(jobPtr->CompanySN))->second)->QL_Min;
 	//	s_p_Worker choosenOne;// = *applicants.begin();
@@ -276,12 +282,12 @@ bool HRC::screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 		float tmpQL = QL(*it, jobPtr);
 		if (tmp < curMin && tmpQL >= minQL) {
 			curMin = tmp;
-			choosenOne = *it;
+			*choosenOne = *it;
 			found = true;
 		} else if (tmpQL >= minQL && tmp == curMin && ((*it)->getID()
-				< choosenOne->getID())) {
+				< (*choosenOne)->getID())) {
 			curMin = tmp;
-			choosenOne = *it;
+			*choosenOne = *it;
 			found = true;
 		}
 	}
@@ -289,7 +295,7 @@ bool HRC::screenApplicantsCheap(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 }
 
 bool HRC::screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
-		s_p_Worker choosenOne) {
+		s_p_Worker *choosenOne) {
 	//	s_p_Worker choosenOne = *applicants.begin();
 	bool found = false;
 	float minQL = ((companies.find(jobPtr->CompanySN))->second)->QL_Min;
@@ -303,12 +309,12 @@ bool HRC::screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 		double tmp = QL(*it, jobPtr);
 		if (tmp > curBest && tmp >= minQL) {
 			curBest = tmp;
-			choosenOne = *it;
+			*choosenOne = *it;
 			found = true;
 		} else if (tmp >= minQL && tmp == curBest && ((*it)->getID()
-				< choosenOne->getID())) {
+				< (*choosenOne)->getID())) {
 			curBest = tmp;
-			choosenOne = *it;
+			*choosenOne = *it;
 			found = true;
 		}
 	}
@@ -316,7 +322,7 @@ bool HRC::screenApplicantsLavish(s_p_Job jobPtr, vector<s_p_Worker> applicants,
 }
 
 bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
-		vector<s_p_Worker> applicants, s_p_Worker choosenOne) {
+		vector<s_p_Worker> applicants, s_p_Worker *choosenOne) {
 	//	s_p_Worker choosenOne = *applicants.begin();
 	bool found = false;
 	float minQL = ((companies.find(jobPtr->CompanySN))->second)->QL_Min;
@@ -332,12 +338,12 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 		float tmp = tmpQL / (*it)->getExpectedSalary();
 		if (tmp > curBest && tmpQL >= minQL) {
 			curBest = tmp;
-			choosenOne = *it;
+			*choosenOne = *it;
 			found = true;
 		} else if (tmpQL >= minQL && tmp == curBest && ((*it)->getID()
-				< choosenOne->getID())) {
+				< (*choosenOne)->getID())) {
 			curBest = tmp;
-			choosenOne = *it;
+			*choosenOne = *it;
 			found = true;
 		}
 	}
