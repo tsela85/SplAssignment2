@@ -6,6 +6,7 @@ using namespace std;
 
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeFormatter.h"
+#include "Poco/Exception.h"
 
 #include "../include/ReadFile.h"
 #include "../include/AppLogger.h"
@@ -16,30 +17,50 @@ using namespace std;
 int main(int argc, char** argv) {
 
 	//remove("/home/tom/workspace/SplAssignment2/app.log");
+	Poco::DateTime date;
+	int jobNum;
+	int workNum;
+	int seekerRep;
+	int companyRep;
+	int HrcStrat;
+	int logConP;
+	int logFileP;
 	string ofile = argv[1];
+	string *file = &ofile;
 	try {
-		string *file = &ofile;
 		ReadFile cofFile(*file);
 
-		//	cout << argv[1] << endl;
-		Poco::DateTime date;
-		int jobNum;
-		int workNum;
-		int seekerRep;
-		int companyRep;
-		int HrcStrat;
-		int logConP;
-		int logFileP;
 		cofFile.getConfig(&date, &jobNum, &workNum, &seekerRep, &companyRep,
 				&HrcStrat, &logConP, &logFileP); //TODO: add try/catch block for exceptions to be logged.
+	} catch (Poco::FileNotFoundException &e) {
+		CAppLogger logger(8, 8);
+		ostringstream msg;
+		msg << "Error: " << ofile << " file not found.";
+		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
+		return 1;
+	} catch (Poco::NotFoundException &e) {
+		CAppLogger logger(8, 8);
 
-		CAppLogger logger(logConP, logFileP);
+		ostringstream msg;
+		msg << "Error reading " << ofile << " file.";
+		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
+		return 1;
+	} catch (Poco::Exception ) { //any other exception
+		CAppLogger logger(8, 8);
+		ostringstream msg;
+		msg << "Error " << ofile.substr(0, ofile.find("."))// just the name of the file
+											<< " data is not consistent.";
+		logger.Log(msg, Poco::Message::PRIO_ERROR);
+		return 1;
+	}
+	CAppLogger logger(logConP, logFileP);
+	try {
+
 
 		HRC hrc = HRC(&date, seekerRep, companyRep, HrcStrat, &logger);
-
+		vector<s_p_Company> companies;
 		*file = argv[2];
 		ReadFile cofFile2(*file);
-		vector<s_p_Company> companies;
 		cofFile2.getCompanies(&companies);
 
 		*file = argv[3];
@@ -91,14 +112,15 @@ int main(int argc, char** argv) {
 			}
 			hrc.ourReport();
 			hrc.match();
-			// TODO: sort commands by date
-			for (vector<Command>::iterator it = commands.begin(); it != commands.end(); it++) {
+			for (vector<Command>::iterator it = commands.begin(); it
+			!= commands.end(); it++) {
 				if (date == it->getDate())
 					it->executeCommand(&hrc);
-				if (hrc.getTerminate()) break;
+				if (hrc.getTerminate())
+					break;
 			}
-			//TODO: make terminate end well
-			if (hrc.getTerminate()) break;
+			if (hrc.getTerminate())
+				break;
 
 			if (hrc.is_last_day()) {
 				hrc.update_Seeker_Rep();
@@ -108,27 +130,45 @@ int main(int argc, char** argv) {
 		}
 
 		logger.Log("terminated", Poco::Message::PRIO_TRACE);
-
-		return 0;
-	} catch (Poco::FileNotFoundException) {
-		CAppLogger logger(8, 8);
+	} catch (Poco::FileNotFoundException &e) {
 		ostringstream msg;
 		msg << "Error: " << ofile << " file not found.";
 		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
 		return 1;
-	} catch (Poco::NotFoundException) {
-		CAppLogger logger(8, 8);
+	} catch (Poco::NotFoundException &e) {
 		ostringstream msg;
 		msg << "Error reading " << ofile << " file.";
 		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
 		return 1;
-	} catch (...) { //any other exception
-		CAppLogger logger(8, 8);
+	} catch (Poco::Exception ) { //any other exception
 		ostringstream msg;
-		msg << "Error " << ofile.substr(0, ofile.find("."))
-						/*just the name of the file*/<< " data is not consistent.";
+		msg << "Error " << ofile.substr(0, ofile.find("."))// just the name of the file
+											<< " data is not consistent.";
 		logger.Log(msg, Poco::Message::PRIO_ERROR);
 		return 1;
 	}
+
+	return 0;
 }
+//catch (Poco::FileNotFoundException) {
+//	CAppLogger logger(8, 8);
+//	ostringstream msg;
+//	msg << "Error: " << ofile << " file not found.";
+//	logger.Log(msg, Poco::Message::PRIO_CRITICAL);
+//	return 1;
+//} catch (Poco::NotFoundException) {
+//	CAppLogger logger(8, 8);
+//	ostringstream msg;
+//	msg << "Error reading " << ofile << " file.";
+//	logger.Log(msg, Poco::Message::PRIO_CRITICAL);
+//	return 1;
+//} catch (...) { //any other exception
+//	CAppLogger logger(8, 8);
+//	ostringstream msg;
+//	msg << "Error " << ofile.substr(0, ofile.find("."))
+//	/*just the name of the file*/<< " data is not consistent.";
+//	logger.Log(msg, Poco::Message::PRIO_ERROR);
+//	return 1;
+//}
+
 

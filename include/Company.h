@@ -15,16 +15,6 @@
 
 using namespace std;
 
-/* TODO: delete this!
- // for company types:
- #define DATA_STORAGE 0;
- #define DIGITAL_MEDIA 1;
- #define E_COMMERCE 2;
- #define GAMING 3;
- #define RT 4;
- #define SECURITY 5;
- */
-
 class Company {
 public:
 	Company();

@@ -332,7 +332,6 @@ void ReadFile::getCommands(std::vector<Command> *commands) {
 }
 
 int switchToInt(string temp) {
-	// temp=stl::tolower(temp); TODO: switch to lower case
 	if (temp == "cpp")
 		return _CPP;
 	if (temp == "java")

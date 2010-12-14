@@ -7,7 +7,7 @@
 #include "../include/Command.h"
 
 CommandType convertCommand(string command) {
-	CommandType temp;
+	CommandType temp=ERROR;
 	if (command == "candidateReport") {
 		temp = CANDIDATEREPORT;
 	} else
@@ -27,7 +27,6 @@ CommandType convertCommand(string command) {
 		temp=TERMINATE;
 	}
 	return temp;
-	// TODO:	throw exeception ("somthing bad")
 }
 
 Command::Command(CommandType _type,Poco::DateTime _date,int _ID) {
@@ -59,6 +58,7 @@ void Command::executeCommand(HRC *hrc) {
 		case SALARYSURVEYREPORTBYSKILL:hrc->reportSalarySurvey(SkillType(kind), date,endDate); break;
 		case PROFITREPORT: hrc->reportProfit(date,endDate); break;
 		case TERMINATE: hrc->terminateProgram(); break;
+		case ERROR: break;
 		default: break;
 	}
 }
@@ -71,6 +71,7 @@ Poco::DateTime Command::getDate() {
 		case SALARYSURVEYREPORTBYSKILL: return endDate;
 		case PROFITREPORT: return endDate;
 		case TERMINATE: return date;
+		case ERROR: break;
 		default: break;
 	}
 	return date;

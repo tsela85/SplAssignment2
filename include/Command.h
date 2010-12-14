@@ -23,11 +23,12 @@ enum CommandType
 	SALARYSURVEYREPORTBYJOB,
 	SALARYSURVEYREPORTBYSKILL,
 	PROFITREPORT,
-	TERMINATE
+	TERMINATE,
+	ERROR
 };
 CommandType convertCommand(string command);
 
-class HRC; //TODO: check if we can remove it
+class HRC;
 
 class Command {
 

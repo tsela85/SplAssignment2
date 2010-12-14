@@ -56,16 +56,8 @@ struct comp_date_sn_jobs {
 	}
 };
 
-//struct comp_date_worker {//to order the set by Poco::DateTime
-//	bool /*operator()*/ comp_date_worker(s_p_Worker lhs, s_p_Worker rhs) /*const*/ { //FIXME: fix sort
-//		return lhs->getInDate() < rhs->getInDate() /*true*/;
-//	}
-//};
 
 class HRC {
-	/*bool comp_date_worker(s_p_Worker lhs, s_p_Worker rhs) { //FIXME: fix sort
-			return lhs->getInDate() < rhs->getInDate() true;
-	}*/
 private:
 	std::map<int, s_p_Worker> workers;
 	std::map<int, s_p_Job> jobs;
