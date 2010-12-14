@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//#include <iostream>
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeFormatter.h"
 
@@ -15,6 +16,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+	//remove("/home/tom/workspace/SplAssignment2/app.log");
 	string ofile = argv[1];
 	try {
 		string *file = &ofile;

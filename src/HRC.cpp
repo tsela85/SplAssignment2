@@ -8,6 +8,7 @@
 #include "../include/HRC.h"
 #include <algorithm>
 #include <limits>
+#include <iostream>
 #include "../include/JobType.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -426,7 +427,12 @@ void HRC::reportJobOpening(int SN, DT date) {
 }
 
 void HRC::reportCandidate(int ID, DT date) {
-	s_p_Worker worker = workers.find(ID)->second;
+	map<int, s_p_Worker>::iterator worker_iter = workers.find(ID);//->second;
+	if (worker_iter == workers.end()) {
+		std::cout << "no candidate with ID " << ID << endl;
+		return;
+	}
+	s_p_Worker worker = worker_iter->second;
 	bool types[6];
 	worker->getDesiredJobTypes(types);
 	string job_types = job_type_stringer(types);
