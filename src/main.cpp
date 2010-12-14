@@ -4,12 +4,11 @@
 
 using namespace std;
 
-//#include <iostream>
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeFormatter.h"
 
 #include "../include/ReadFile.h"
-#include "../h/AppLogger.h"
+#include "../include/AppLogger.h"
 #include "boost/shared_ptr.hpp"
 #include "../include/HRC.h"
 #include "../include/defs.h"
@@ -108,7 +107,7 @@ int main(int argc, char** argv) {
 
 		}
 
-		logger.Log("terminated", Poco::Message::PRIO_FATAL); // FIXME: change priority
+		logger.Log("terminated", Poco::Message::PRIO_TRACE);
 
 		return 0;
 	} catch (Poco::FileNotFoundException) {

@@ -8,7 +8,7 @@
 
 #include "../include/defs.h"
 #include "Poco/DateTime.h"
-#include "../h/AppLogger.h"
+#include "../include/AppLogger.h"
 
 
 #ifndef WORKER_H_

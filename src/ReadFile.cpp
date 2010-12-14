@@ -8,7 +8,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "../include/ReadFile.h"
-#include "../h/AppLogger.h"
+#include "../include/AppLogger.h"
 
 using namespace Poco;
 using namespace Poco::Util;

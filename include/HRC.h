@@ -25,7 +25,7 @@
 #include <boost/ptr_container/ptr_list.hpp>
 #include "../include/defs.h"
 #include "../include/HRCReport.h"
-#include "../h/AppLogger.h"
+#include "../include/AppLogger.h"
 
 typedef boost::shared_ptr<Company> s_p_Company;
 typedef Poco::DateTime DT;
