@@ -11,6 +11,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <list>
 //#include <memory>
 #include "Poco/DateTime.h"
 #include "Poco/Timespan.h"
@@ -55,18 +56,21 @@ struct comp_date_sn_jobs {
 	}
 };
 
-struct comp_date_worker {//to order the set by Poco::DateTime
-	bool operator()(s_p_Worker lhs, s_p_Worker rhs) const {
-		return lhs->getInDate() < rhs->getInDate();
-	}
-};
+//struct comp_date_worker {//to order the set by Poco::DateTime
+//	bool /*operator()*/ comp_date_worker(s_p_Worker lhs, s_p_Worker rhs) /*const*/ { //FIXME: fix sort
+//		return lhs->getInDate() < rhs->getInDate() /*true*/;
+//	}
+//};
 
 class HRC {
+	/*bool comp_date_worker(s_p_Worker lhs, s_p_Worker rhs) { //FIXME: fix sort
+			return lhs->getInDate() < rhs->getInDate() true;
+	}*/
 private:
 	std::map<int, s_p_Worker> workers;
 	std::map<int, s_p_Job> jobs;
 	std::map<int, s_p_Company> companies;
-	set<s_p_Worker, comp_date_worker> seekers;
+	list<s_p_Worker> seekers;
 	set<s_p_Job, comp_date_sn_jobs> openings;
 	long profit;
 	Poco::DateTime *time;
@@ -199,6 +203,8 @@ public:
 	bool is_last_day();
 
 	void ourReport();
+
+
 };
 
 #endif /* HRC_H_ */

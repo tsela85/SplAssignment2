@@ -73,11 +73,15 @@ void HRC::incDate() {
 void HRC::addCandidate(s_p_Worker w) {
 	//	s_p_Worker workerPtr(new Worker(w));
 	workers.insert(std::make_pair(w->getID(), w));
-	seekers.insert(w);
+	seekers.push_back(w);
 	monthly_candidates++;
 	ostringstream msg;
 	msg << "Candidate " << w->getID() << " was added to the HRC DB.";
 	logger->Log(msg.str(), Poco::Message::PRIO_WARNING);
+	ostringstream msg2;
+	msg2 << "No of seekers in DB: " << seekers.size()
+			<< "\tand in 'workers' map: " << workers.size();
+	logger->Log(msg2.str(), Poco::Message::PRIO_TRACE);
 }
 
 void HRC::addJob(s_p_Job j) {
@@ -145,10 +149,33 @@ void HRC::match() {
 	s_p_Worker placedWorker;
 	int DEBUG = openings.size();
 	for (set<s_p_Job, comp_date_sn_jobs>::iterator it = openings.begin(); it
-			!= openings.end(); it++) {
+			!= openings.end();) {
 		if (matchForJob(*it, &placedWorker)) {
 			candidate_placement(placedWorker, *it);
-		}
+
+			ostringstream msg11;
+			msg11 << "Jobs before deleting.. no of jobs " << openings.size()
+					<< endl;
+			logger->Log(msg11.str(), Poco::Message::PRIO_TRACE);
+
+			openings.erase(it++);
+
+			ostringstream msg21;
+			msg21 << "Jobs after deleting.. no of jobs " << openings.size() << endl;
+			logger->Log(msg21.str(), Poco::Message::PRIO_TRACE);
+
+			ostringstream msg1;
+			msg1 << "before deleting.. no of seekers " << seekers.size()
+					<< endl;
+			logger->Log(msg1.str(), Poco::Message::PRIO_TRACE);
+			//	map<s_p_Worker, comp_date_worker>iterator debug = seekers.find(placedWorker);
+			seekers.remove(placedWorker);
+
+			ostringstream msg2;
+			msg2 << "after deleting.. no of seekers " << seekers.size() << endl;
+			logger->Log(msg2.str(), Poco::Message::PRIO_TRACE);
+		} else
+			++it;
 	}
 
 }
@@ -157,8 +184,8 @@ void HRC::candidate_placement(s_p_Worker placedWorker, s_p_Job job) {
 	placedWorker->hired();
 	job->taken(*time);
 	monthly_placements++;
-	seekers.erase(placedWorker);
-	openings.erase(job);
+
+	//	openings.erase(job);
 	float salary = placedWorker->getExpectedSalary();
 	Poco::DateTime outDate = *time;
 	int jobType = ((companies.find(job->CompanySN))->second)->type;
@@ -196,7 +223,6 @@ void HRC::copySkills(vector<bool> into, int size, Worker w) {
 bool HRC::matchForJob(s_p_Job jobPtr, s_p_Worker *choosenOne) {
 	vector<s_p_Worker> applicants;
 	applicants = getApplicants(jobPtr);
-	int DEBUG = applicants.size();
 	if (applicants.size() > 0 && screenApplicants(jobPtr, applicants,
 			choosenOne)) {
 		return true;
@@ -213,7 +239,7 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 	for (int j = 0; j < 6; ++j) {
 		desired.push_back(job.skills[j]);
 	}
-	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it
+	for (list<s_p_Worker/*, comp_date_worker*/>::iterator it = seekers.begin(); it
 			!= seekers.end(); ++it) {
 		Worker worker = **it; //a list of pointers (s_p_Worker)
 		int skills[6];
@@ -352,7 +378,7 @@ bool HRC::screenApplicantsCostEffective(s_p_Job jobPtr,
 
 void HRC::compromise() {
 	bool go_on = true;
-	for (set<s_p_Worker, comp_date_worker>::iterator it = seekers.begin(); it
+	for (list<s_p_Worker/*, comp_date_worker*/>::iterator it = seekers.begin(); it
 			!= seekers.end() && go_on; it++) {
 		go_on = (*it)->compromise();
 	}
