@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
 		msg << "Error reading " << ofile << " file.";
 		logger.Log(msg, Poco::Message::PRIO_CRITICAL);
 		return 1;
-	} catch (Poco::Exception ) { //any other exception
+	} catch (...) { //any other exception
 		ostringstream msg;
 		msg << "Error " << ofile.substr(0, ofile.find("."))// just the name of the file
 											<< " data is not consistent.";

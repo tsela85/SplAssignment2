@@ -58,6 +58,9 @@ public:
 	/** returns the date the worker joined the HRC seekers database */
 	Poco::DateTime getInDate();
 
+	/** set the InDate for the worker */
+	void setInDate();
+
 	/** sets the date the worker left the HRC seekers database */
 	void setOutDate();
 

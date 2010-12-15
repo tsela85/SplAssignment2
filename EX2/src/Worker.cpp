@@ -12,7 +12,7 @@
 using namespace std;
 
 Worker::Worker(int _ID, int _skills[6], bool _desiredJobTypes[6],
-		float _expectedSalary, Poco::DateTime *_time, CAppLogger *_logger) {
+		float _expectedSalary, Poco::DateTime *_time, CAppLogger *_logger) /*: inDate(*_time)*/ {
 	ID = _ID;
 	for (int i = 0; i < 6; i++) {
 		skills[i] = _skills[i];
@@ -46,6 +46,10 @@ float Worker::getExpectedSalary() {
 
 Poco::DateTime Worker::getInDate() {
 	return inDate;
+}
+
+void Worker::setInDate() {
+	inDate = *time;
 }
 
 void Worker::setOutDate() {
