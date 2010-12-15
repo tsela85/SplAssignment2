@@ -18,13 +18,13 @@ int switchToInt(string temp);
 
 // Constructor that receive data stream as std::istream
 ReadFile::ReadFile(std::istream& istr) :
-	IniFileConfiguration(istr) {
+			IniFileConfiguration(istr) {
 
 }
 
 // Constructor that receive path as std::string
 ReadFile::ReadFile(const std::string& path) :
-	IniFileConfiguration(path) {
+			IniFileConfiguration(path) {
 }
 
 ReadFile::~ReadFile() {
@@ -155,10 +155,11 @@ void ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
 		ostringstream sQl;
 		sQl << "COMPANY" << i << ".QL_Min";
 		float ql = getDouble(sQl.str());
-
-		// create a company
-		s_p_Company company(new Company(name, type, SN, recPolicy, ql));
-		_companies->push_back(company);
+		if (type != -1 && recPolicy != -1) {
+			// create a company
+			s_p_Company company(new Company(name, type, SN, recPolicy, ql));
+			_companies->push_back(company);
+		}
 
 	}
 }

@@ -50,7 +50,7 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.293387990" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.963938640" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
-							<tool command="g++ /usr/lib/libPocoUtild.so /usr/lib/libPocoFoundationd.so" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.257741362" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+							<tool command="g++ /usr/lib/libPocoUtil.so /usr/lib/libPocoFoundation.so" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.257741362" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.paths.1221013855" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/usr/lib"/>
 									<listOptionValue builtIn="false" value="/usr/lib64"/>

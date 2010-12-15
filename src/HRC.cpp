@@ -72,6 +72,7 @@ void HRC::incDate() {
 }
 
 void HRC::addCandidate(s_p_Worker w) {
+	w->setInDate();
 	//	s_p_Worker workerPtr(new Worker(w));
 	workers.insert(std::make_pair(w->getID(), w));
 	seekers.push_back(w);
@@ -148,7 +149,6 @@ void HRC::update_Seeker_Rep() {
 
 void HRC::match() {
 	s_p_Worker placedWorker;
-	int DEBUG = openings.size();
 	for (set<s_p_Job, comp_date_sn_jobs>::iterator it = openings.begin(); it
 			!= openings.end();) {
 		if (matchForJob(*it, &placedWorker)) {
@@ -269,9 +269,11 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 		}
 		float avg = tot / num;
 		for (v_p_Worker::iterator it = applicants.begin(); it
-				!= applicants.end(); ++it) {
+				!= applicants.end();) {
 			if ((*time - (*it)->getInDate()).days() < avg) {
-				it = applicants.erase(it);
+				applicants.erase(it++);
+			} else {
+				++it;
 			}
 		}
 		return applicants;

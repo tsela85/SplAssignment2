@@ -18,13 +18,13 @@ int switchToInt(string temp);
 
 // Constructor that receive data stream as std::istream
 ReadFile::ReadFile(std::istream& istr) :
-	IniFileConfiguration(istr) {
+			IniFileConfiguration(istr) {
 
 }
 
 // Constructor that receive path as std::string
 ReadFile::ReadFile(const std::string& path) :
-	IniFileConfiguration(path) {
+			IniFileConfiguration(path) {
 }
 
 ReadFile::~ReadFile() {
@@ -74,7 +74,6 @@ void ReadFile::getConfig(Poco::DateTime *_date, int *_jobNum, int *_workNum,
 		*_HrcStrat = EAGER;
 	else if (stratString == "FAIR")
 		*_HrcStrat = FAIR;
-	//   else TODO: throw exception error reading
 
 	// Get LOGGER_CONSOLE_PRIORITY
 	streamLogConp << "GENERAL.LOGGER_CONSOLE_PRIORITY";
@@ -156,10 +155,11 @@ void ReadFile::getCompanies(std::vector<s_p_Company> *_companies) {
 		ostringstream sQl;
 		sQl << "COMPANY" << i << ".QL_Min";
 		float ql = getDouble(sQl.str());
-
-		// create a company
-		s_p_Company company(new Company(name, type, SN, recPolicy, ql));
-		_companies->push_back(company);
+		if (type != -1 && recPolicy != -1) {
+			// create a company
+			s_p_Company company(new Company(name, type, SN, recPolicy, ql));
+			_companies->push_back(company);
+		}
 
 	}
 }
@@ -364,7 +364,6 @@ int switchToInt(string temp) {
 		return LAVISH;
 	if (temp == "Cost_Effective")
 		return COST_EFFECTIVE;
-
-	return -1; // TODO: throw error
+	return -1;
 }
 

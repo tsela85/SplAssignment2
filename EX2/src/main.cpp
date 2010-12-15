@@ -16,7 +16,6 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	//remove("/home/tom/workspace/SplAssignment2/app.log");
 	Poco::DateTime date;
 	int jobNum;
 	int workNum;
@@ -31,7 +30,7 @@ int main(int argc, char** argv) {
 		ReadFile cofFile(*file);
 
 		cofFile.getConfig(&date, &jobNum, &workNum, &seekerRep, &companyRep,
-				&HrcStrat, &logConP, &logFileP); //TODO: add try/catch block for exceptions to be logged.
+				&HrcStrat, &logConP, &logFileP);
 	} catch (Poco::FileNotFoundException &e) {
 		CAppLogger logger(8, 8);
 		ostringstream msg;
@@ -94,9 +93,6 @@ int main(int argc, char** argv) {
 		}
 		int new_workers(0), new_jobs(0);
 
-		//	commands[0].executeCommand(&hrc);
-
-		//bool terminate = false;
 		while (!hrc.getTerminate()) {
 			hrc.incDate();
 			hrc.compromise();
@@ -150,25 +146,5 @@ int main(int argc, char** argv) {
 
 	return 0;
 }
-//catch (Poco::FileNotFoundException) {
-//	CAppLogger logger(8, 8);
-//	ostringstream msg;
-//	msg << "Error: " << ofile << " file not found.";
-//	logger.Log(msg, Poco::Message::PRIO_CRITICAL);
-//	return 1;
-//} catch (Poco::NotFoundException) {
-//	CAppLogger logger(8, 8);
-//	ostringstream msg;
-//	msg << "Error reading " << ofile << " file.";
-//	logger.Log(msg, Poco::Message::PRIO_CRITICAL);
-//	return 1;
-//} catch (...) { //any other exception
-//	CAppLogger logger(8, 8);
-//	ostringstream msg;
-//	msg << "Error " << ofile.substr(0, ofile.find("."))
-//	/*just the name of the file*/<< " data is not consistent.";
-//	logger.Log(msg, Poco::Message::PRIO_ERROR);
-//	return 1;
-//}
 
 
