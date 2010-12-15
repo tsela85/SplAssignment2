@@ -271,7 +271,7 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 		for (v_p_Worker::iterator it = applicants.begin(); it
 				!= applicants.end();) {
 			if ((*time - (*it)->getInDate()).days() < avg) {
-				applicants.erase(it++);
+				applicants.erase(it);
 			} else {
 				++it;
 			}
