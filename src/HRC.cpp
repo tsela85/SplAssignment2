@@ -257,7 +257,7 @@ vector<s_p_Worker> HRC::getApplicants(s_p_Job jobPtr) {
 			applicants.push_back(*it);
 		}
 	}
-	if (strategy == 1) {
+	if ((strategy == 1) || (jobPtr->inDate != *time))  {
 		return applicants;
 	} else { //strategy == FAIR
 		float tot = 0;
